@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O que mudou — Simulador de Competência e Manifestação</title>
+<link rel="stylesheet" href="estilo.css?v=fdd483bbfb">
+</head>
+<body>
+
+<header class="topo">
+  <div class="faixa">
+    <h1>Simulador de Competência e Manifestação</h1>
+    <p class="sub">Destinação de imóveis da União — manifestação prévia, competência
+    para autorizar e assinatura do instrumento</p>
+    <nav class="abas">
+      <a href="index.html">Simulador</a>
+      <a href="tabela.html">Tabela de regras</a>
+      <a href="ficha.html">Ficha da matéria</a>
+      <a href="rito.html">Rito e requisitos</a>
+      <a href="mudancas.html" aria-current="page">O que mudou</a>
+    </nav>
+  </div>
+</header>
+
+<div id="estado-base"></div>
+
+<main>
+  <p class="advertencia">Cada mudança abaixo é a <strong>nota que a planilha de
+  requisitos traz na própria linha</strong> — a classificação é de quem mantém a
+  planilha, não nossa. Para saber o que a regra diz hoje, vá à
+  <a href="tabela.html">tabela</a> ou à <a href="ficha.html">ficha da matéria</a>.</p>
+
+  <section class="consulta filtros">
+    <h2>Filtro</h2>
+    <div class="grade-filtros">
+      <div class="campo">
+        <label class="pergunta" for="f-materia">Matéria</label>
+        <select id="f-materia"><option value="">Todas</option></select>
+      </div>
+      <div class="campo campo-botao">
+        <button type="button" id="limpar">Limpar</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="mudancas"></div>
+</main>
+
+<footer class="rodape">
+  <p class="linha-base">
+    <strong id="versao"></strong> ·
+    <span id="situacao-base"></span>
+  </p>
+  <p class="linha-fonte">Fonte da carga: <span id="fonte"></span></p>
+  <p class="assinatura">Desenvolvido por CGGES — Escritório de Processos</p>
+</footer>
+
+<script src="base.js?v=fdd483bbfb"></script>
+<script src="rotulos.js?v=fdd483bbfb"></script>
+<script src="mudancas.js?v=fdd483bbfb"></script>
+</body>
+</html>

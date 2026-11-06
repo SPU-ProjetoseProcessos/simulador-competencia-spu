@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabela de regras — Simulador de Competência e Manifestação</title>
+<link rel="stylesheet" href="estilo.css?v=fdd483bbfb">
+</head>
+<body>
+
+<header class="topo">
+  <div class="faixa">
+    <h1>Simulador de Competência e Manifestação</h1>
+    <p class="sub">Destinação de imóveis da União — manifestação prévia, competência
+    para autorizar e assinatura do instrumento</p>
+    <nav class="abas">
+      <a href="index.html">Simulador</a>
+      <a href="tabela.html" aria-current="page">Tabela de regras</a>
+      <a href="ficha.html">Ficha da matéria</a>
+      <a href="rito.html">Rito e requisitos</a>
+      <a href="mudancas.html">O que mudou</a>
+    </nav>
+  </div>
+</header>
+
+<div id="estado-base"></div>
+
+<main class="largo">
+
+  <section class="consulta filtros">
+    <h2>Filtros</h2>
+    <div class="grade-filtros">
+      <div class="campo">
+        <label class="pergunta" for="f-busca">Busca</label>
+        <input type="search" id="f-busca" placeholder="matéria, condição, fundamento…">
+      </div>
+      <div class="campo">
+        <label class="pergunta" for="f-materia">Matéria</label>
+        <select id="f-materia"><option value="">Todas</option></select>
+      </div>
+      <div class="campo">
+        <label class="pergunta" for="f-dimensao">Dimensão</label>
+        <select id="f-dimensao">
+          <option value="">As duas</option>
+          <option value="manifestacao">Manifestação</option>
+          <option value="competencia">Competência</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label class="pergunta" for="f-resultado">Resposta</label>
+        <select id="f-resultado">
+          <option value="">Qualquer</option>
+          <option value="cde">CDE</option>
+          <option value="ge_desup">GE-DESUP</option>
+          <option value="sem_manifestacao">Sem manifestação</option>
+          <option value="superintendente">Superintendente</option>
+          <option value="secretario">Secretário(a)</option>
+          <option value="ministro">Ministro(a)</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label class="pergunta" for="f-so">Só mostrar</label>
+        <select id="f-so">
+          <option value="">Todas as regras</option>
+          <option value="pendencia">Com pendência</option>
+          <option value="coringa">Regras coringa</option>
+          <option value="alteracao">Alteradas na v4</option>
+        </select>
+      </div>
+      <div class="campo campo-botao">
+        <button type="button" id="limpar">Limpar filtros</button>
+      </div>
+    </div>
+    <p class="contagem"><span id="contagem"></span></p>
+  </section>
+
+  <p id="vazio" class="vazio" hidden>Nenhuma regra atende a esses filtros.</p>
+
+  <div class="rolagem">
+    <table class="regras">
+      <thead>
+        <tr>
+          <th>Regra</th>
+          <th>Matéria</th>
+          <th>Dimensão</th>
+          <th>Valor</th>
+          <th>Área</th>
+          <th>Condições</th>
+          <th>Responde</th>
+          <th>Fundamento</th>
+        </tr>
+      </thead>
+      <tbody id="corpo"></tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer class="rodape">
+  <p class="linha-base">
+    <strong id="versao"></strong> ·
+    <span id="situacao-base"></span>
+  </p>
+  <p class="linha-fonte">Fonte da carga: <span id="fonte"></span></p>
+  <p class="assinatura">Desenvolvido por CGGES — Escritório de Processos</p>
+</footer>
+
+<script src="base.js?v=fdd483bbfb"></script>
+<script src="rotulos.js?v=fdd483bbfb"></script>
+<script src="tabela.js?v=fdd483bbfb"></script>
+</body>
+</html>
