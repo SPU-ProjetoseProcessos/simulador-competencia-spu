@@ -74,6 +74,7 @@ function montarSeletor() {
     // As condições, não: elas são de outra matéria.
     estado.condicoes = {};
     estado.situacao = null;
+    assinaturaNaTela = null;   // matéria nova, formulário novo
     desenhar();
   });
 }
@@ -86,7 +87,45 @@ function respostasAtuais() {
   return r;
 }
 
+/* O formulário só é reconstruído quando muda de verdade.
+ *
+ * Antes, cada tecla disparava o redesenho e o redesenho recriava todos os
+ * campos — inclusive aquele em que se estava digitando, que deixava de existir
+ * e levava o foco junto. Dava para digitar um algarismo por clique.
+ *
+ * Agora: compara-se a assinatura do formulário — quais campos, com que rótulo
+ * de área e que opções — com a que está na tela. Igual, não se mexe no HTML;
+ * só os ecos "R$ 500.000" e "20.000 m²" são atualizados no lugar. Diferente,
+ * reconstrói — e aí devolve foco e posição do cursor a quem os tinha. */
+let assinaturaNaTela = null;
+
+function assinaturaCampos(lista) {
+  return lista.map((c) => [c.campo, c.tipo, c.referencia || '',
+    (c.valores || []).join(',')].join(':')).join('|');
+}
+
+function atualizarEcos() {
+  ['valor', 'area'].forEach((qual) => {
+    const e = document.getElementById('eco-' + qual);
+    if (!e) return;
+    e.textContent = estado[qual] === null ? ''
+      : (qual === 'valor' ? brl.format(estado[qual])
+        : fmt.format(estado[qual]) + ' m²');
+  });
+}
+
 function desenharCampos(lista) {
+  const assinatura = assinaturaCampos(lista);
+  if (assinatura === assinaturaNaTela) {
+    atualizarEcos();
+    return;
+  }
+  const antes = document.activeElement;
+  const foco = antes && antes.id ? antes.id : null;
+  let inicio = null;
+  let fim = null;
+  try { inicio = antes.selectionStart; fim = antes.selectionEnd; } catch (e) { /* number */ }
+
   const alvo = document.getElementById('campos');
   alvo.textContent = '';
   lista.forEach((c) => {
@@ -95,6 +134,16 @@ function desenharCampos(lista) {
     else if (c.campo === 'situacao') alvo.appendChild(campoSituacao(c));
     else alvo.appendChild(campoCondicaoHtml(c));
   });
+  assinaturaNaTela = assinatura;
+
+  if (foco) {
+    const depois = document.getElementById(foco);
+    if (depois) {
+      depois.focus();
+      // input[type=number] recusa setSelectionRange em alguns navegadores
+      try { if (inicio !== null) depois.setSelectionRange(inicio, fim); } catch (e) { /* ok */ }
+    }
+  }
 }
 
 function campoNumero(c, qual) {
@@ -127,11 +176,11 @@ function campoNumero(c, qual) {
   linha.appendChild(i);
   linha.appendChild(el('span', 'unidade', qual === 'valor' ? 'R$' : 'm²'));
   d.appendChild(linha);
-  if (estado[qual] !== null) {
-    d.appendChild(el('p', 'eco', qual === 'valor'
-      ? brl.format(estado[qual])
+  const eco = el('p', 'eco', estado[qual] === null ? ''
+    : (qual === 'valor' ? brl.format(estado[qual])
       : fmt.format(estado[qual]) + ' m²'));
-  }
+  eco.id = 'eco-' + qual;
+  d.appendChild(eco);
   return d;
 }
 
@@ -150,7 +199,8 @@ function campoSituacao(c) {
 function campoCondicaoHtml(c) {
   const d = el('div', 'campo');
   d.appendChild(el('label', 'pergunta', c.pergunta));
-  if (c.motivo) d.appendChild(el('p', 'nota-campo', 'Esta pergunta ' + c.motivo + '.'));
+  // O `motivo` continua sendo calculado — é ele que põe esta pergunta antes do
+  // campo de área —, mas não se exibe (item 9 do backlog).
   const porValor = {};
   c.teste.valores.forEach((v) => { porValor[v.valor] = v; });
   c.valores.forEach((v) => {
