@@ -47,7 +47,7 @@ const GATILHO = {
   formulario_art_7_v: 'Regra de transição do art. 10, § 1º, I, da Portaria MGI '
     + 'nº 11.384/2025: vigora até a edição do formulário padronizado do art. 7º, V.',
   diretrizes_cde_por_regime: 'Regra de transição do art. 10, § 1º, II: vigora até '
-    + 'a CDE editar diretrizes próprias para esta matéria.',
+    + 'a CDE editar diretrizes próprias para este regime.',
 };
 const NIVEL_GE_DESUP = {
   0: 'nível 0 — até R$ 1,0 milhão',
@@ -120,30 +120,3 @@ function resultadoTexto(r) {
   }
   return base;
 }
-
-/* Faixa de estado da base, em todas as páginas.
- *
- * Enquanto a base não for validada pela área de destinação, quem abre a
- * ferramenta tem de saber disso ANTES de ler qualquer resposta — não depois,
- * numa linha de rodapé. O texto sai da própria base: validada a base, a faixa
- * muda sozinha. */
-(function faixaEstado() {
-  const alvo = document.getElementById('estado-base');
-  if (!alvo || !window.BASE) return;
-  const validada = /validad[ao]\b/i.test(BASE.situacao)
-    && !/aguardando/i.test(BASE.situacao);
-  const faixa = document.createElement('div');
-  faixa.className = 'faixa-estado ' + (validada ? 'ok' : 'atencao');
-  const dentro = document.createElement('div');
-  dentro.className = 'faixa-estado-dentro';
-  const forte = document.createElement('strong');
-  forte.textContent = validada
-    ? 'Base validada pela área de destinação.'
-    : 'Base ainda não validada pela área de destinação.';
-  dentro.appendChild(forte);
-  dentro.appendChild(document.createTextNode(' As respostas reproduzem a planilha '
-    + 'de requisitos (' + BASE.fonte + ') e servem para conferência e estudo. '
-    + 'Para instruir processo, confira a norma.'));
-  faixa.appendChild(dentro);
-  alvo.appendChild(faixa);
-}());

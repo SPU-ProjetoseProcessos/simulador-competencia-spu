@@ -159,7 +159,7 @@ function desenharFicha(cod) {
   alvo.textContent = '';
   const m = materiaDe(cod);
   if (!m) {
-    alvo.appendChild(el('p', 'vazio', 'Escolha uma matéria ao lado.'));
+    alvo.appendChild(el('p', 'vazio', 'Escolha um regime ao lado.'));
     return;
   }
   atual = cod;
@@ -178,7 +178,7 @@ function desenharFicha(cod) {
     + (m.classe && BASE.classes_tt02[m.classe] ? ' · ' + BASE.classes_tt02[m.classe] : '');
   id.appendChild(meta);
   const acoes = el('p', 'acoes');
-  const aSim = el('a', 'botao-link', 'Simular um caso desta matéria');
+  const aSim = el('a', 'botao-link', 'Simular um caso deste regime');
   aSim.href = 'index.html#' + cod;
   acoes.appendChild(aSim);
   const aTab = el('a', 'botao-link', 'Ver estas regras na tabela');
@@ -206,12 +206,12 @@ function desenharFicha(cod) {
   });
   if (!ul.children.length) {
     b1.appendChild(el('p', 'explica',
-      'Nada. Escolher a matéria já basta: a resposta não depende de valor, área nem condição.'));
+      'Nada. Escolher o regime já basta: a resposta não depende de valor, área nem condição.'));
   } else {
     b1.appendChild(ul);
   }
   if (m.testes_indiferentes && m.testes_indiferentes.length) {
-    b1.appendChild(el('p', 'explica', 'A planilha declara indiferente nesta matéria: '
+    b1.appendChild(el('p', 'explica', 'A planilha declara indiferente neste regime: '
       + m.testes_indiferentes.map((t) => (TESTES[t] ? TESTES[t].rotulo : t)).join(', ') + '.'));
   }
   alvo.appendChild(b1);
@@ -223,7 +223,7 @@ function desenharFicha(cod) {
       const b = bloco(par[1] + ' — ' + rs.length
         + (rs.length === 1 ? ' regra' : ' regras'));
       if (!rs.length) {
-        b.appendChild(el('p', 'explica', 'A base não tem regra desta dimensão para esta matéria.'));
+        b.appendChild(el('p', 'explica', 'Não há regra desta dimensão para este regime.'));
       } else {
         b.appendChild(tabelaRegras(rs));
       }
@@ -245,7 +245,7 @@ function desenharFicha(cod) {
   }
   if (m.observacao) ressalvas.push(m.observacao);
   if (m.coringas_situacao === 'a_confirmar' && (m.coringas_admitidos || []).length) {
-    ressalvas.push('O alcance da condição de finalidade de interesse social nesta matéria '
+    ressalvas.push('O alcance da condição de finalidade de interesse social neste regime '
       + 'reproduz a planilha e aguarda confirmação da área de destinação.');
   }
   const pend = regras.filter((r) => r.pendencia);
@@ -255,7 +255,7 @@ function desenharFicha(cod) {
     const quais = [];
     if (g.manifestacao) quais.push('na aba Manifestação, “' + g.manifestacao + '”');
     if (g.competencia) quais.push('na aba Competência, “' + g.competencia + '”');
-    ressalvas.push('Como a matéria aparece na planilha: ' + quais.join('; ') + '.');
+    ressalvas.push('Como o regime aparece na planilha: ' + quais.join('; ') + '.');
   }
   if (ressalvas.length) {
     const b = bloco('Ressalvas e procedência', 'ressalva');
@@ -271,13 +271,6 @@ function daAncora() {
   return materiaDe(cod) ? cod : null;
 }
 
-function montarRodape() {
-  document.getElementById('versao').textContent = 'Base de ' + BASE.versao;
-  document.getElementById('fonte').textContent = BASE.fonte;
-  document.getElementById('situacao-base').textContent = BASE.situacao;
-}
-
 montarIndice();
-montarRodape();
 window.addEventListener('hashchange', () => desenharFicha(daAncora()));
 desenharFicha(daAncora());

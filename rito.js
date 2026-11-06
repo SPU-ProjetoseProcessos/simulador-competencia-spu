@@ -112,7 +112,7 @@ function desenharRito() {
   // --- exigências por matéria
   const pm = normas('requisito_por_materia');
   if (pm.length) {
-    const s = bloco('Exigências que alcançam matérias determinadas');
+    const s = bloco('Exigências que alcançam regimes determinados');
     pm.forEach((n) => s.appendChild(cartaoNorma(n)));
     alvo.appendChild(s);
   }
@@ -143,11 +143,4 @@ function desenharRito() {
   alvo.appendChild(q);
 }
 
-function montarRodape() {
-  document.getElementById('versao').textContent = 'Base de ' + BASE.versao;
-  document.getElementById('fonte').textContent = BASE.fonte;
-  document.getElementById('situacao-base').textContent = BASE.situacao;
-}
-
 desenharRito();
-montarRodape();

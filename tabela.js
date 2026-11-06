@@ -22,7 +22,7 @@ function el(tag, cls, texto) {
 }
 
 function rotuloMateria(r) {
-  if (r.materia === '*') return 'Qualquer matéria admitida';
+  if (r.materia === '*') return 'Qualquer regime admitido';
   const m = MATERIAS[r.materia];
   return m ? m.rotulo : r.materia;
 }
@@ -144,12 +144,6 @@ function desenhar() {
   document.getElementById('vazio').hidden = linhas.length > 0;
 }
 
-function montarRodape() {
-  document.getElementById('versao').textContent = 'Base de ' + BASE.versao;
-  document.getElementById('fonte').textContent = BASE.fonte;
-  document.getElementById('situacao-base').textContent = BASE.situacao;
-}
-
 /* `tabela.html#02.01.02.01.01` abre já filtrada naquela matéria. */
 function aplicarAncora() {
   const cod = decodeURIComponent(location.hash.replace(/^#/, ''));
@@ -159,7 +153,6 @@ function aplicarAncora() {
 }
 
 montarFiltros();
-montarRodape();
 window.addEventListener('hashchange', () => { aplicarAncora(); desenhar(); });
 aplicarAncora();
 desenhar();

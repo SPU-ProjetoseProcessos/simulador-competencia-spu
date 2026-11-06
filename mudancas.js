@@ -49,11 +49,11 @@ function agrupar() {
 function linkMaterias(codigos) {
   const p = el('p', 'menor');
   if (!codigos.length) {
-    p.textContent = 'Regra coringa — não se prende a uma matéria.';
+    p.textContent = 'Regra coringa — não se prende a um regime.';
     return p;
   }
   p.appendChild(el('strong', null,
-    codigos.length === 1 ? 'Matéria: ' : codigos.length + ' matérias: '));
+    codigos.length === 1 ? 'Regime: ' : codigos.length + ' regimes: '));
   codigos.slice().sort((a, b) => (MATERIAS[a] ? MATERIAS[a].rotulo : a)
     .localeCompare(MATERIAS[b] ? MATERIAS[b].rotulo : b, 'pt-BR'))
     .forEach((c, i) => {
@@ -144,19 +144,12 @@ function desenhar() {
   const b2 = bloco('As mudanças, agrupadas pela nota da planilha');
   const demais = grupos.filter((g) => !/a confirmar/i.test(g.nota));
   if (!demais.length) {
-    b2.appendChild(el('p', 'vazio', 'Nenhuma nota de alteração nesta matéria.'));
+    b2.appendChild(el('p', 'vazio', 'Nenhuma nota de alteração neste regime.'));
   } else {
     demais.forEach((g) => b2.appendChild(cartaoMudanca(g)));
   }
   alvo.appendChild(b2);
 }
 
-function montarRodape() {
-  document.getElementById('versao').textContent = 'Base de ' + BASE.versao;
-  document.getElementById('fonte').textContent = BASE.fonte;
-  document.getElementById('situacao-base').textContent = BASE.situacao;
-}
-
 montarFiltro();
-montarRodape();
 desenhar();

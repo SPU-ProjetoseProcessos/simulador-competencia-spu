@@ -27,7 +27,7 @@ function materiaDe(codigo) {
  * O rótulo do pai vem da TT-02, não do nome das filhas. */
 function montarSeletor() {
   const sel = document.getElementById('materia');
-  sel.appendChild(el('option', null, 'Escolha a matéria…')).value = '';
+  sel.appendChild(el('option', null, 'Escolha o regime…')).value = '';
 
   const porClasse = {};
   const colapsadas = {};
@@ -337,7 +337,7 @@ function desenharResultado(lista) {
   const alvo = document.getElementById('resultado');
   alvo.textContent = '';
   if (!estado.materia) {
-    alvo.appendChild(el('p', 'vazio', 'Escolha uma matéria para começar.'));
+    alvo.appendChild(el('p', 'vazio', 'Escolha um regime para começar.'));
     return;
   }
   const m = materiaDe(estado.materia);
@@ -356,7 +356,7 @@ function desenharResultado(lista) {
   // --- manifestação prévia
   if (!manif.vence.length) {
     alvo.appendChild(blocoResultado('Manifestação prévia',
-      'A base não tem regra de manifestação para esta matéria.', 'neutro'));
+      'Não há regra de manifestação para este regime.', 'neutro'));
   } else if (manif.vence.length > 1) {
     alvo.appendChild(blocoColisao('Manifestação prévia', manif.vence));
   } else {
@@ -381,7 +381,7 @@ function desenharResultado(lista) {
   // --- competência para autorizar
   if (!comp.vence.length) {
     alvo.appendChild(blocoResultado('Competência para autorizar',
-      'A base não tem regra de competência para esta matéria.', 'neutro'));
+      'Não há regra de competência para este regime.', 'neutro'));
   } else if (comp.vence.length > 1) {
     alvo.appendChild(blocoColisao('Competência para autorizar', comp.vence));
   } else {
@@ -404,14 +404,14 @@ function desenharResultado(lista) {
   const ressalvas = [];
   const opcaoSel = document.querySelector('#materia option:checked');
   if (opcaoSel && opcaoSel.dataset.colapsa) {
-    ressalvas.push('A planilha não distinguiu as submodalidades desta matéria ('
+    ressalvas.push('A planilha não distinguiu as submodalidades deste regime ('
       + opcaoSel.dataset.colapsa + '): a regra é a mesma para as duas. Isso mostra '
       + 'que a planilha não as distinguiu, não que o direito as equipare.');
   }
   if (m.observacao) ressalvas.push(m.observacao);
   if (m.coringas_situacao === 'a_confirmar' && (m.coringas_admitidos || []).length) {
     ressalvas.push('O alcance da condição de finalidade de interesse social nesta '
-      + 'matéria reproduz a planilha e aguarda confirmação da área de destinação.');
+      + 'regime reproduz a planilha e aguarda confirmação da área de destinação.');
   }
   if (ressalvas.length) {
     const s = el('section', 'bloco ressalva');
@@ -484,12 +484,6 @@ function desenhar() {
   desenharResultado(lista);
 }
 
-function montarRodape() {
-  document.getElementById('versao').textContent = 'Base de ' + BASE.versao;
-  document.getElementById('fonte').textContent = BASE.fonte;
-  document.getElementById('situacao-base').textContent = BASE.situacao;
-}
-
 /* `index.html#02.01.02.01.01` abre já naquela matéria — é assim que a ficha
  * manda o leitor para cá. */
 function daAncora() {
@@ -506,7 +500,6 @@ function aplicarAncora() {
 }
 
 montarSeletor();
-montarRodape();
 window.addEventListener('hashchange', aplicarAncora);
 aplicarAncora();
 desenhar();

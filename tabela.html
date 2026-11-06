@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tabela de regras — Simulador de Competência e Manifestação</title>
-<link rel="stylesheet" href="estilo.css?v=c936abb0f9">
+<link rel="stylesheet" href="estilo.css?v=23f4be0149">
 </head>
 <body>
 
@@ -16,14 +16,12 @@
     <nav class="abas">
       <a href="index.html">Simulador</a>
       <a href="tabela.html" aria-current="page">Tabela de regras</a>
-      <a href="ficha.html">Ficha da matéria</a>
+      <a href="ficha.html">Ficha do regime</a>
       <a href="rito.html">Rito e requisitos</a>
       <a href="mudancas.html">O que mudou</a>
     </nav>
   </div>
 </header>
-
-<div id="estado-base"></div>
 
 <main class="largo">
 
@@ -32,10 +30,10 @@
     <div class="grade-filtros">
       <div class="campo">
         <label class="pergunta" for="f-busca">Busca</label>
-        <input type="search" id="f-busca" placeholder="matéria, condição, fundamento…">
+        <input type="search" id="f-busca" placeholder="regime, condição, fundamento…">
       </div>
       <div class="campo">
-        <label class="pergunta" for="f-materia">Matéria</label>
+        <label class="pergunta" for="f-materia">Regime</label>
         <select id="f-materia"><option value="">Todas</option></select>
       </div>
       <div class="campo">
@@ -81,7 +79,7 @@
       <thead>
         <tr>
           <th>Regra</th>
-          <th>Matéria</th>
+          <th>Regime</th>
           <th>Dimensão</th>
           <th>Valor</th>
           <th>Área</th>
@@ -97,16 +95,11 @@
 </main>
 
 <footer class="rodape">
-  <p class="linha-base">
-    <strong id="versao"></strong> ·
-    <span id="situacao-base"></span>
-  </p>
-  <p class="linha-fonte">Fonte da carga: <span id="fonte"></span></p>
   <p class="assinatura">Desenvolvido por CGGES — Escritório de Processos</p>
 </footer>
 
-<script src="base.js?v=c936abb0f9"></script>
-<script src="rotulos.js?v=c936abb0f9"></script>
-<script src="tabela.js?v=c936abb0f9"></script>
+<script src="base.js?v=23f4be0149"></script>
+<script src="rotulos.js?v=23f4be0149"></script>
+<script src="tabela.js?v=23f4be0149"></script>
 </body>
 </html>
