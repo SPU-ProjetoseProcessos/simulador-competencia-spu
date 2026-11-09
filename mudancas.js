@@ -104,24 +104,14 @@ function desenhar() {
   // --- números
   const b0 = bloco('Em números');
   b0.appendChild(el('p', 'resposta-menor',
-    comNota + ' de ' + total + ' regras trazem nota de alteração, em '
-    + grupos.length + (grupos.length === 1 ? ' nota distinta' : ' notas distintas')));
+    comNota + ' de ' + total + ' regras foram alteradas, em '
+    + grupos.length + (grupos.length === 1 ? ' alteração distinta' : ' alterações distintas')));
   alvo.appendChild(b0);
-
-  // --- o que a própria planilha deixou a confirmar
-  const aConfirmar = grupos.filter((g) => /a confirmar/i.test(g.nota));
-  if (aConfirmar.length) {
-    const b = bloco('O que a própria planilha deixou a confirmar', 'ressalva');
-    b.appendChild(el('p', 'explica', 'Notas em que quem manteve a planilha escreveu '
-      + '"a confirmar". São pontos abertos na própria fonte — não achados nossos.'));
-    aConfirmar.forEach((g) => b.appendChild(cartaoMudanca(g)));
-    alvo.appendChild(b);
-  }
 
   // --- normas que alteraram a tabela
   const motores = BASE.normas.filter((n) => n.altera_manifestacao);
   if (motores.length && !filtroMateria) {
-    const b = bloco('As normas que mexeram na tabela de manifestação');
+    const b = bloco('As normas que alteraram a manifestação');
     motores.forEach((n) => {
       const d = el('article', 'norma');
       const cab = el('header', 'norma-cab');
@@ -133,7 +123,7 @@ function desenhar() {
       b.appendChild(d);
     });
     const p = el('p', 'menor');
-    const a = el('a', null, 'Ver todas as normas na página de rito');
+    const a = el('a', null, 'Ver todas as normas no rito');
     a.href = 'rito.html';
     p.appendChild(a);
     b.appendChild(p);
@@ -141,10 +131,10 @@ function desenhar() {
   }
 
   // --- todas as mudanças
-  const b2 = bloco('As mudanças, agrupadas pela nota da planilha');
-  const demais = grupos.filter((g) => !/a confirmar/i.test(g.nota));
+  const b2 = bloco('As alterações');
+  const demais = grupos;
   if (!demais.length) {
-    b2.appendChild(el('p', 'vazio', 'Nenhuma nota de alteração neste regime.'));
+    b2.appendChild(el('p', 'vazio', 'Nenhuma alteração registrada neste regime.'));
   } else {
     demais.forEach((g) => b2.appendChild(cartaoMudanca(g)));
   }

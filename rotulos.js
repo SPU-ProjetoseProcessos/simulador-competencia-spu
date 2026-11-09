@@ -120,3 +120,17 @@ function resultadoTexto(r) {
   }
   return base;
 }
+
+/* Rodapé, igual nas cinco páginas: a data da versão e a situação da base.
+   A "fonte da carga" saiu — não dizia nada a quem consulta. */
+(function rodape() {
+  if (!window.BASE) return;
+  const v = document.getElementById('versao');
+  const s = document.getElementById('situacao-base');
+  if (v) {
+    const d = BASE.versao.split('-');   // a base guarda ISO; a tela escreve em português
+    v.textContent = 'Base de ' + (d.length === 3 ? d[2] + '/' + d[1] + '/' + d[0]
+      : BASE.versao);
+  }
+  if (s) s.textContent = BASE.situacao;
+}());

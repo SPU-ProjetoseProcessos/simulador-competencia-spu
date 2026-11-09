@@ -142,7 +142,8 @@ function tabelaRegras(regras) {
     tr.appendChild(tdr);
     const tdf = el('td', 'col-origem');
     tdf.appendChild(el('div', 'fundamento', r.fundamento || '—'));
-    tdf.appendChild(el('div', 'origem', 'Planilha: “' + (r.origem.condicao || '—') + '”'));
+    tdf.appendChild(el('div', 'origem', 'Texto de origem: “'
+      + (r.origem.condicao || '—') + '”'));
     tr.appendChild(tdf);
     tb.appendChild(tr);
   });
@@ -187,35 +188,6 @@ function desenharFicha(cod) {
   id.appendChild(acoes);
   alvo.appendChild(id);
 
-  // --- o que a tela pergunta
-  const b1 = bloco('O que a ferramenta pergunta');
-  const pedeValor = proprias.some((r) => usaFaixa(r, 'valor'));
-  const pedeArea = proprias.some((r) => usaFaixa(r, 'area'));
-  const ul = el('ul', 'campos-ficha');
-  if (pedeValor) ul.appendChild(el('li', null, 'Valor do imóvel'));
-  if (pedeArea) ul.appendChild(el('li', null, 'Área, e a situação do imóvel nas faixas em que ela muda a resposta'));
-  m.testes.forEach((t) => {
-    const te = TESTES[t];
-    const li = el('li', null, te ? te.pergunta : t);
-    if (te && te.exibir_quando) {
-      const dep = TESTES[te.exibir_quando.split('=')[0]];
-      li.appendChild(el('span', 'menor', ' — só quando «'
-        + (dep ? dep.rotulo : te.exibir_quando) + '» for a resposta que a destrava'));
-    }
-    ul.appendChild(li);
-  });
-  if (!ul.children.length) {
-    b1.appendChild(el('p', 'explica',
-      'Nada. Escolher o regime já basta: a resposta não depende de valor, área nem condição.'));
-  } else {
-    b1.appendChild(ul);
-  }
-  if (m.testes_indiferentes && m.testes_indiferentes.length) {
-    b1.appendChild(el('p', 'explica', 'A planilha declara indiferente neste regime: '
-      + m.testes_indiferentes.map((t) => (TESTES[t] ? TESTES[t].rotulo : t)).join(', ') + '.'));
-  }
-  alvo.appendChild(b1);
-
   // --- regras por dimensão
   [['manifestacao', 'Manifestação prévia'], ['competencia', 'Competência para autorizar']]
     .forEach((par) => {
@@ -239,24 +211,17 @@ function desenharFicha(cod) {
   // --- ressalvas
   const ressalvas = [];
   if (irmas.length) {
-    ressalvas.push('A planilha não distinguiu as submodalidades deste regime ('
-      + irmas.map((x) => x.rotulo).join(' · ') + '): a regra é a mesma para as duas. '
-      + 'Isso mostra que a planilha não as distinguiu, não que o direito as equipare.');
+    ressalvas.push('As submodalidades deste regime ('
+      + irmas.map((x) => x.rotulo).join(' · ') + ') não foram distinguidas na origem: '
+      + 'a regra é a mesma para as duas — o que não quer dizer que o direito as equipare.');
   }
   if (m.observacao) ressalvas.push(m.observacao);
   if (m.coringas_situacao === 'a_confirmar' && (m.coringas_admitidos || []).length) {
     ressalvas.push('O alcance da condição de finalidade de interesse social neste regime '
-      + 'reproduz a planilha e aguarda confirmação da área de destinação.');
+      + 'aguarda confirmação da área de destinação.');
   }
   const pend = regras.filter((r) => r.pendencia);
   pend.forEach((r) => ressalvas.push('Pendência em ' + r.id + ': ' + r.pendencia));
-  const g = m.grafia_v4 || {};
-  if (g.manifestacao || g.competencia) {
-    const quais = [];
-    if (g.manifestacao) quais.push('na aba Manifestação, “' + g.manifestacao + '”');
-    if (g.competencia) quais.push('na aba Competência, “' + g.competencia + '”');
-    ressalvas.push('Como o regime aparece na planilha: ' + quais.join('; ') + '.');
-  }
   if (ressalvas.length) {
     const b = bloco('Ressalvas e procedência', 'ressalva');
     ressalvas.forEach((x) => b.appendChild(el('p', 'explica', x)));

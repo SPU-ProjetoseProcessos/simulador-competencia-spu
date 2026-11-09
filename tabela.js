@@ -103,7 +103,7 @@ function celulaOrigem(r) {
   d.appendChild(el('summary', null, 'fundamento e origem'));
   d.appendChild(el('p', 'fundamento', r.fundamento || '—'));
   const g = el('p', 'origem');
-  g.textContent = 'Planilha: “' + r.origem.materia + '” · “'
+  g.textContent = 'Texto de origem: “' + r.origem.materia + '” · “'
     + (r.origem.valor || '—') + '” · “' + (r.origem.area || '—') + '” · “'
     + (r.origem.condicao || '—') + '” → “' + (r.origem.resultado || '—') + '”';
   d.appendChild(g);

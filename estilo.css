@@ -1,15 +1,22 @@
 :root {
-  --tinta: #1b1d20;
-  --tinta-fraca: #55595f;
-  --linha: #d8dade;
-  --fundo: #f4f5f7;
-  --papel: #ffffff;
-  --azul: #0b4f8a;
-  --azul-claro: #eaf1f8;
-  --ambar: #8a5a00;
-  --ambar-claro: #fdf3e0;
-  --vermelho: #8a1f1f;
+  /* Paleta do SPUProcessos. Os nomes antigos continuam, apontando para as cores
+     de lá, para a folha inteira adotar a identidade de uma vez. */
+  --fg: #333333;        --tinta: #333333;
+  --fg-muted: #5a6068;  --tinta-fraca: #5a6068;
+  --border: #e2e6ec;    --linha: #e2e6ec;
+  --bg: #f0f2f5;        --fundo: #f0f2f5;
+  --surface: #ffffff;   --papel: #ffffff;
+  --accent: #1b2b85;    --azul: #1b2b85;
+  --accent-claro: #5992ed;
+  --accent-soft: #e8f0ff; --azul-claro: #e8f0ff;
+  --ok: #168821;
+  --meio: #9a6700;      --ambar: #9a6700;
+  --ambar-claro: #fff6e3;
+  --vermelho: #953735;
   --vermelho-claro: #fbeded;
+  --marca-1: #1351b4; --marca-2: #2e9e4f; --marca-3: #f2b705; --marca-4: #e8771f;
+  --sombra: 0 1px 2px rgba(28,28,28,.05), 0 8px 24px -16px rgba(12,50,111,.35);
+  --fonte-ui: "Raleway", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -18,17 +25,31 @@ body {
   margin: 0;
   background: var(--fundo);
   color: var(--tinta);
-  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font: 16px/1.55 var(--fonte-ui);
 }
 
 .topo {
-  background: var(--azul);
-  color: #fff;
-  padding: 1.4rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
-.faixa { max-width: 1120px; margin: 0 auto; padding: 0 1rem; }
-.topo h1 { margin: 0; font-size: 1.45rem; font-weight: 600; letter-spacing: -0.01em; }
-.topo .sub { margin: 0.35rem 0 0; font-size: 0.92rem; opacity: 0.85; }
+.faixa {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 12px 1rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.marca { display: flex; align-items: center; gap: 11px; min-width: 0; text-decoration: none; }
+.marca-nome { font-size: 20px; line-height: 1.1; letter-spacing: -0.02em; white-space: nowrap; }
+.marca-nome b { font-weight: 700; color: var(--fg); }
+.marca-nome span { font-weight: 400; color: var(--accent); }
+.marca-barras { display: flex; align-items: flex-end; gap: 2px; height: 20px; flex: none; }
+.marca-barras i { width: 3px; border-radius: 1px; display: block; }
 
 main { max-width: 1320px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
 
@@ -53,9 +74,10 @@ h2 {
 
 .consulta, .saida {
   background: var(--papel);
-  border: 1px solid var(--linha);
-  border-radius: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 1.25rem;
+  box-shadow: var(--sombra);
 }
 
 /* ----------------------------------------------------------------- campos */
@@ -165,23 +187,19 @@ select:focus, input:focus { outline: 2px solid var(--azul); outline-offset: 1px;
 .rodape p { margin: 0 0 0.2rem; }
 .rodape .assinatura { margin-top: 0.7rem; font-weight: 600; color: var(--tinta); }
 
-/* ------------------------------------------------------------------- abas */
+/* ------------------------------------------------------------- navegação */
 
-.abas { margin-top: 0.9rem; display: flex; gap: 0.4rem; }
+.abas { margin-left: auto; display: flex; align-items: center; gap: 4px; flex: none; }
 .abas a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 0.88rem;
-  padding: 0.35rem 0.8rem;
-  border-radius: 4px 4px 0 0;
-  background: rgba(255, 255, 255, 0.12);
+  font-size: 13.5px; font-weight: 500; color: var(--accent); text-decoration: none;
+  border-radius: 999px; padding: 7px 12px; white-space: nowrap;
 }
-.abas a:hover { background: rgba(255, 255, 255, 0.22); }
-.abas a[aria-current="page"] { background: var(--fundo); color: var(--azul); font-weight: 600; }
+.abas a:hover { background: var(--accent-soft); }
+.abas a[aria-current="page"] { border: 1px solid var(--accent); font-weight: 600; padding: 6px 15px; }
 
 /* --------------------------------------------------------- tabela de regras */
 
-main.largo { max-width: 1480px; }
+main.largo { max-width: 1320px; }
 
 .filtros { margin-bottom: 1.25rem; }
 .grade-filtros {
@@ -200,16 +218,11 @@ input[type="search"] {
   border-radius: 4px;
 }
 button {
-  font: inherit;
-  font-size: 0.9rem;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid #b9bcc2;
-  border-radius: 4px;
-  background: var(--papel);
-  color: var(--tinta);
-  cursor: pointer;
+  font: inherit; font-size: 13.5px; font-weight: 600;
+  padding: 7px 16px; border: 0; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); cursor: pointer;
 }
-button:hover { background: var(--azul-claro); border-color: var(--azul); }
+button:hover { background: #d7e4fb; }
 .contagem {
   margin: 0.9rem 0 0;
   padding-top: 0.8rem;

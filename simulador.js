@@ -293,8 +293,7 @@ function fundamentos(regras, preteridas) {
     f.appendChild(document.createTextNode(r.fundamento || '—'));
     d.appendChild(f);
     if (r.origem && r.origem.condicao) {
-      d.appendChild(el('p', 'origem', 'Condição na planilha: “'
-        + r.origem.condicao + '”'));
+      d.appendChild(el('p', 'origem', 'Texto de origem: “' + r.origem.condicao + '”'));
     }
   });
   (preteridas || []).forEach((r) => {
@@ -314,8 +313,8 @@ function blocoColisao(titulo, vence) {
   const d = el('section', 'bloco colisao');
   d.appendChild(el('h3', null, titulo));
   d.appendChild(el('p', 'resposta', 'A ferramenta não responde este caso.'));
-  d.appendChild(el('p', 'explica', 'Duas regras da planilha são igualmente '
-    + 'específicas e dizem coisas diferentes, e a condição que as separaria não '
+  d.appendChild(el('p', 'explica', 'Duas regras igualmente específicas dizem '
+    + 'coisas diferentes, e a condição que as separaria não '
     + 'está reduzida. Escolher uma seria decidir no lugar de quem tem competência '
     + 'para isso. As duas hipóteses:'));
   const ul = el('ul', 'hipoteses');
@@ -404,14 +403,14 @@ function desenharResultado(lista) {
   const ressalvas = [];
   const opcaoSel = document.querySelector('#materia option:checked');
   if (opcaoSel && opcaoSel.dataset.colapsa) {
-    ressalvas.push('A planilha não distinguiu as submodalidades deste regime ('
-      + opcaoSel.dataset.colapsa + '): a regra é a mesma para as duas. Isso mostra '
-      + 'que a planilha não as distinguiu, não que o direito as equipare.');
+    ressalvas.push('As submodalidades deste regime (' + opcaoSel.dataset.colapsa
+      + ') não foram distinguidas na origem: a regra é a mesma para as duas — o que '
+      + 'não quer dizer que o direito as equipare.');
   }
   if (m.observacao) ressalvas.push(m.observacao);
   if (m.coringas_situacao === 'a_confirmar' && (m.coringas_admitidos || []).length) {
-    ressalvas.push('O alcance da condição de finalidade de interesse social nesta '
-      + 'regime reproduz a planilha e aguarda confirmação da área de destinação.');
+    ressalvas.push('O alcance da condição de finalidade de interesse social neste '
+      + 'regime aguarda confirmação da área de destinação.');
   }
   if (ressalvas.length) {
     const s = el('section', 'bloco ressalva');

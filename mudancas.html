@@ -3,32 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>O que mudou — Simulador de Competência e Manifestação</title>
-<link rel="stylesheet" href="estilo.css?v=c0e1892d76">
+<title>Alterações — Simulador de Competência e Manifestação</title>
+<link rel="stylesheet" href="estilo.css?v=ae5a846aff">
 </head>
 <body>
 
 <header class="topo">
   <div class="faixa">
-    <h1>Simulador de Competência e Manifestação</h1>
-    <p class="sub">Destinação de imóveis da União — manifestação prévia, competência
-    para autorizar e assinatura do instrumento</p>
+    <a class="marca" href="index.html">
+      <span class="marca-nome"><b>Simulador</b> <span>de Competência e Manifestação</span></span>
+      <span class="marca-barras" aria-hidden="true">
+        <i style="height:9px;background:var(--marca-1)"></i>
+        <i style="height:15px;background:var(--marca-2)"></i>
+        <i style="height:20px;background:var(--marca-3)"></i>
+        <i style="height:13px;background:var(--marca-4)"></i>
+        <i style="height:7px;background:var(--marca-1)"></i>
+      </span>
+    </a>
     <nav class="abas">
       <a href="index.html">Simulador</a>
       <a href="tabela.html">Tabela de regras</a>
       <a href="ficha.html">Ficha do regime</a>
       <a href="rito.html">Rito e requisitos</a>
-      <a href="mudancas.html" aria-current="page">O que mudou</a>
+      <a href="mudancas.html" aria-current="page">Alterações</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <p class="advertencia">Cada mudança abaixo é a <strong>nota que a planilha de
-  requisitos traz na própria linha</strong> — a classificação é de quem mantém a
-  planilha, não nossa. Para saber o que a regra diz hoje, vá à
-  <a href="tabela.html">tabela</a> ou à <a href="ficha.html">ficha do regime</a>.</p>
-
   <section class="consulta filtros">
     <h2>Filtro</h2>
     <div class="grade-filtros">
@@ -46,11 +48,15 @@
 </main>
 
 <footer class="rodape">
+  <p class="linha-base">
+    <strong id="versao"></strong> ·
+    <span id="situacao-base"></span>
+  </p>
   <p class="assinatura">Desenvolvido por CGGES — Escritório de Processos</p>
 </footer>
 
-<script src="base.js?v=c0e1892d76"></script>
-<script src="rotulos.js?v=c0e1892d76"></script>
-<script src="mudancas.js?v=c0e1892d76"></script>
+<script src="base.js?v=ae5a846aff"></script>
+<script src="rotulos.js?v=ae5a846aff"></script>
+<script src="mudancas.js?v=ae5a846aff"></script>
 </body>
 </html>
