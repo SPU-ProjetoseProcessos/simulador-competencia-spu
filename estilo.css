@@ -30,11 +30,11 @@ body {
 .topo h1 { margin: 0; font-size: 1.45rem; font-weight: 600; letter-spacing: -0.01em; }
 .topo .sub { margin: 0.35rem 0 0; font-size: 0.92rem; opacity: 0.85; }
 
-main { max-width: 1120px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
+main { max-width: 1320px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
 
 .colunas {
   display: grid;
-  grid-template-columns: minmax(0, 23rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
@@ -60,7 +60,7 @@ h2 {
 
 /* ----------------------------------------------------------------- campos */
 
-.campo { margin-bottom: 1.15rem; }
+.campo { margin-bottom: 0.85rem; }
 .campo > label.pergunta {
   display: block;
   font-weight: 600;
@@ -89,15 +89,17 @@ select:focus, input:focus { outline: 2px solid var(--azul); outline-offset: 1px;
 .linha-numero .unidade { color: var(--tinta-fraca); font-size: 0.9rem; }
 .eco { margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--azul); font-weight: 600; }
 
+/* As opções são metade da altura do formulário: 580 px dos 1115 da venda.
+   Compactá-las devolve mais rolagem do que alargar a coluna. */
 .opcao {
   display: flex;
   gap: 0.55rem;
   align-items: flex-start;
-  padding: 0.4rem 0.55rem;
+  padding: 0.25rem 0.5rem;
   border: 1px solid var(--linha);
   border-radius: 4px;
-  margin-bottom: 0.35rem;
-  font-size: 0.92rem;
+  margin-bottom: 0.2rem;
+  font-size: 0.88rem;
   font-weight: 400;
   cursor: pointer;
 }
