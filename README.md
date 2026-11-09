@@ -1,4 +1,6 @@
-# Simulador de Competência e Manifestação
+# Governança da Destinação
+
+**Simulador de manifestação e competência**
 
 Consulta, por matéria de destinação de imóveis da União e pelas condições do caso:
 

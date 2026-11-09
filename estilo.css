@@ -50,6 +50,9 @@ body {
 .marca-nome span { font-weight: 400; color: var(--accent); }
 .marca-barras { display: flex; align-items: flex-end; gap: 2px; height: 20px; flex: none; }
 .marca-barras i { width: 3px; border-radius: 1px; display: block; }
+.modulo { padding-left: 16px; border-left: 1px solid var(--border); min-width: 0; }
+.modulo strong { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; }
+.modulo span { display: block; font-size: 12.5px; color: var(--fg-muted); line-height: 1.3; }
 
 main { max-width: 1320px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
 
