@@ -60,44 +60,55 @@ function cartaoNorma(n) {
   return d;
 }
 
+/* O fluxo: um passo por cartão, numerado, com a linha ligando-os.
+   Decisão e caminho posterior têm tratamento próprio. */
+function passo(p, numero) {
+  const li = el('li', 'passo ' + p.tipo);
+  const bolha = el('div', 'passo-n' + (p.tipo === 'decisao' ? ' decisao' : '')
+    + (p.tipo === 'posterior' ? ' posterior' : ''),
+    p.tipo === 'decisao' ? '?' : String(numero));
+  li.appendChild(bolha);
+  const c = el('div', 'passo-cartao');
+  if (p.quem) c.appendChild(el('p', 'passo-quem', p.quem));
+  c.appendChild(el('h2', 'passo-titulo', p.o_que));
+  if (p.detalhes.length) {
+    const ul = el('ul', 'passo-detalhes');
+    p.detalhes.forEach((d) => ul.appendChild(el('li', null, d)));
+    c.appendChild(ul);
+  }
+  if (p.ramos.length) {
+    const g = el('div', 'ramos');
+    p.ramos.forEach((r, n) => {
+      const b = el('div', 'ramo ' + (n === 0 ? 'sim' : 'nao'));
+      b.appendChild(el('strong', null, r.rotulo));
+      b.appendChild(document.createTextNode(r.texto));
+      g.appendChild(b);
+    });
+    c.appendChild(g);
+  }
+  if (p.observacao) c.appendChild(el('p', 'menor', p.observacao));
+  if (p.fundamento) c.appendChild(el('span', 'fonte', p.fundamento));
+  li.appendChild(c);
+  return li;
+}
+
 function desenharRito() {
   const alvo = document.getElementById('rito');
 
   // --- o fluxo
-  const b = bloco('O rito de instrução');
-  const rito = BASE.normas.filter((n) => n.papel === 'rito')[0];
-  if (rito) {
-    b.appendChild(el('p', 'explica', rito.norma + ' — ' + rito.tema + '. '
-      + rito.data_vigencia + '.'));
-  }
-  const ol = el('ol', 'passos');
-  BASE.rito.filter((p) => p.tipo === 'etapa').forEach((p) => {
-    const li = el('li');
-    li.appendChild(el('div', 'passo-quem', p.quem));
-    li.appendChild(el('div', 'passo-oque', p.o_que));
-    if (p.observacao) li.appendChild(el('div', 'menor', p.observacao));
-    li.appendChild(el('div', 'origem', p.fundamento));
-    ol.appendChild(li);
+  const ol = el('ol', 'fluxo');
+  let n = 0;
+  BASE.rito.forEach((p) => {
+    if (p.tipo !== 'decisao') n += 1;
+    ol.appendChild(passo(p, n));
   });
-  b.appendChild(ol);
-  alvo.appendChild(b);
-
-  // --- desvios e verificação posterior
-  BASE.rito.filter((p) => p.tipo !== 'etapa').forEach((p) => {
-    const s = bloco(TIPO_PASSO[p.tipo] || p.tipo,
-      p.tipo === 'desvio' ? 'ressalva' : 'nota');
-    s.appendChild(el('p', 'passo-quem', p.quem));
-    s.appendChild(el('p', 'passo-oque', p.o_que));
-    if (p.observacao) s.appendChild(el('p', 'menor', p.observacao));
-    s.appendChild(el('p', 'origem', p.fundamento));
-    alvo.appendChild(s);
-  });
+  alvo.appendChild(ol);
 
   // --- como o colegiado decide
   const dec = normas('decisao');
   if (dec.length) {
     const s = bloco('Como o colegiado decide');
-    dec.forEach((n) => s.appendChild(cartaoNorma(n)));
+    dec.forEach((x) => s.appendChild(cartaoNorma(x)));
     alvo.appendChild(s);
   }
 
@@ -105,15 +116,15 @@ function desenharRito() {
   const tr = normas('requisito_transversal');
   if (tr.length) {
     const s = bloco('O que todo processo submetido à CDE precisa ter');
-    tr.forEach((n) => s.appendChild(cartaoNorma(n)));
+    tr.forEach((x) => s.appendChild(cartaoNorma(x)));
     alvo.appendChild(s);
   }
 
-  // --- exigências por matéria
+  // --- exigências por regime
   const pm = normas('requisito_por_materia');
   if (pm.length) {
     const s = bloco('Exigências que alcançam regimes determinados');
-    pm.forEach((n) => s.appendChild(cartaoNorma(n)));
+    pm.forEach((x) => s.appendChild(cartaoNorma(x)));
     alvo.appendChild(s);
   }
 
@@ -128,12 +139,12 @@ function desenharRito() {
   thead.appendChild(trh);
   t.appendChild(thead);
   const tb = el('tbody');
-  BASE.normas.forEach((n) => {
+  BASE.normas.forEach((x) => {
     const tr2 = el('tr');
-    tr2.appendChild(el('td', null, n.norma));
-    tr2.appendChild(el('td', null, n.data_vigencia));
-    tr2.appendChild(el('td', null, n.tema));
-    tr2.appendChild(el('td', null, n.altera_manifestacao ? 'Sim' : 'Não'));
+    tr2.appendChild(el('td', null, x.norma));
+    tr2.appendChild(el('td', null, x.data_vigencia));
+    tr2.appendChild(el('td', null, x.tema));
+    tr2.appendChild(el('td', null, x.altera_manifestacao ? 'Sim' : 'Não'));
     tb.appendChild(tr2);
   });
   t.appendChild(tb);

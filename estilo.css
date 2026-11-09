@@ -403,3 +403,59 @@ ol.passos li { margin-bottom: 1rem; }
   line-height: 1.45;
 }
 .faixa-estado.atencao .faixa-estado-dentro strong { color: var(--ambar); }
+
+/* ------------------------------------------------------ rito: título e fluxo */
+
+.titulo-pagina { margin: 0 0 4px; font-size: 1.5rem; line-height: 1.25; font-weight: 600; }
+.sub-pagina { margin: 0 0 16px; color: var(--fg-muted); max-width: 60ch; }
+.etiquetas { margin: 0 0 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+.etiqueta-norma {
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 999px; padding: 4px 12px; font-size: 0.85rem; font-weight: 600;
+}
+
+ol.fluxo { position: relative; margin: 0 0 24px; padding: 0; list-style: none; }
+ol.fluxo:before {
+  content: ""; position: absolute; left: 19px; top: 8px; bottom: 8px;
+  width: 3px; background: var(--border);
+}
+.passo { position: relative; padding-left: 56px; margin-bottom: 18px; }
+.passo-n {
+  position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: #fff; display: flex; align-items: center;
+  justify-content: center; font-weight: 700; border: 3px solid var(--bg);
+}
+.passo-n.decisao { background: var(--meio); }
+.passo-n.posterior { background: var(--ok); }
+.passo-cartao {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 16px; box-shadow: var(--sombra);
+}
+.passo.decisao .passo-cartao { border-left: 5px solid var(--meio); }
+.passo-quem {
+  margin: 0 0 2px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--accent);
+}
+.passo-titulo {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  /* a regra geral de h2 põe versalete e caixa alta; aqui é título de cartão */
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--fg);
+}
+.passo-detalhes { margin: 4px 0 0; padding-left: 18px; font-size: 0.93rem; }
+.passo-detalhes li { margin: 2px 0; }
+.ramos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+@media (max-width: 600px) { .ramos { grid-template-columns: 1fr; } }
+.ramo { border-radius: 10px; padding: 10px 12px; font-size: 0.92rem; }
+.ramo strong { display: block; margin-bottom: 2px; }
+.ramo.sim { background: #e3f4ea; border: 1px solid var(--ok); }
+.ramo.sim strong { color: var(--ok); }
+.ramo.nao { background: var(--vermelho-claro); border: 1px solid var(--vermelho); }
+.ramo.nao strong { color: var(--vermelho); }
+.fonte {
+  display: inline-block; margin-top: 8px; font-size: 0.78rem; color: var(--fg-muted);
+  background: var(--bg); border-radius: 6px; padding: 2px 8px;
+}
