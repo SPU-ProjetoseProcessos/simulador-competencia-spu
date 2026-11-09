@@ -404,8 +404,8 @@ function desenharResultado(lista) {
   const opcaoSel = document.querySelector('#materia option:checked');
   if (opcaoSel && opcaoSel.dataset.colapsa) {
     ressalvas.push('As submodalidades deste regime (' + opcaoSel.dataset.colapsa
-      + ') não foram distinguidas na origem: a regra é a mesma para as duas — o que '
-      + 'não quer dizer que o direito as equipare.');
+      + '): a regra é a mesma para as duas. '
+      + 'Isso não quer dizer que o direito as equipare.');
   }
   if (m.observacao) ressalvas.push(m.observacao);
   if (m.coringas_situacao === 'a_confirmar' && (m.coringas_admitidos || []).length) {

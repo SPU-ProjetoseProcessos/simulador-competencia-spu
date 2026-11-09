@@ -212,8 +212,8 @@ function desenharFicha(cod) {
   const ressalvas = [];
   if (irmas.length) {
     ressalvas.push('As submodalidades deste regime ('
-      + irmas.map((x) => x.rotulo).join(' · ') + ') não foram distinguidas na origem: '
-      + 'a regra é a mesma para as duas — o que não quer dizer que o direito as equipare.');
+      + irmas.map((x) => x.rotulo).join(' · ') + '): a regra é a mesma para as duas. '
+      + 'Isso não quer dizer que o direito as equipare.');
   }
   if (m.observacao) ressalvas.push(m.observacao);
   if (m.coringas_situacao === 'a_confirmar' && (m.coringas_admitidos || []).length) {

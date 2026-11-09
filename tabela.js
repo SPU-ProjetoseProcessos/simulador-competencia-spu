@@ -113,7 +113,7 @@ function celulaOrigem(r) {
   }
   if (r.ge_desup_gatilho) d.appendChild(el('p', 'origem', GATILHO[r.ge_desup_gatilho]));
   if (r.alteracao) d.appendChild(el('p', 'origem', 'Alteração: ' + r.alteracao));
-  if (r.observacao) d.appendChild(el('p', 'origem', r.observacao));
+  // a observação da regra é registro interno de carga: fica no CSV, não na tela
   if (r.pendencia) d.appendChild(el('p', 'pendencia', r.pendencia));
   d.appendChild(el('p', 'origem', 'Vigência desde ' + r.vigencia_inicio));
   td.appendChild(d);
