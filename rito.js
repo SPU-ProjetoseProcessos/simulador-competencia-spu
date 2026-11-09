@@ -128,30 +128,6 @@ function desenharRito() {
     alvo.appendChild(s);
   }
 
-  // --- quadro das normas
-  const q = bloco('Quadro das normas');
-  const t = el('table', 'regras');
-  const thead = el('thead');
-  const trh = el('tr');
-  ['Norma', 'Data e vigência', 'Tema', 'Alterou a manifestação?'].forEach((x) => {
-    trh.appendChild(el('th', null, x));
-  });
-  thead.appendChild(trh);
-  t.appendChild(thead);
-  const tb = el('tbody');
-  BASE.normas.forEach((x) => {
-    const tr2 = el('tr');
-    tr2.appendChild(el('td', null, x.norma));
-    tr2.appendChild(el('td', null, x.data_vigencia));
-    tr2.appendChild(el('td', null, x.tema));
-    tr2.appendChild(el('td', null, x.altera_manifestacao ? 'Sim' : 'Não'));
-    tb.appendChild(tr2);
-  });
-  t.appendChild(tb);
-  const caixa = el('div', 'rolagem-interna');
-  caixa.appendChild(t);
-  q.appendChild(caixa);
-  alvo.appendChild(q);
 }
 
 desenharRito();
