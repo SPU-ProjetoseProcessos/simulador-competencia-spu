@@ -81,7 +81,7 @@ function celulaRegra(r) {
   const td = el('td', 'col-regra');
   td.appendChild(el('div', 'id-regra', r.id));
   if (r.pendencia) td.appendChild(el('span', 'etiqueta pend', 'pendência'));
-  if (r.materia === '*') td.appendChild(el('span', 'etiqueta coringa', 'coringa'));
+  if (r.materia === '*') td.appendChild(el('span', 'etiqueta coringa', 'qualquer regime'));
   if (r.alteracao) td.appendChild(el('span', 'etiqueta alt', 'alterada'));
   return td;
 }
