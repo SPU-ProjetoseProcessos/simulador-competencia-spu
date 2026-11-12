@@ -247,16 +247,20 @@ function casoDe(lista) {
   };
 }
 
+/* O que falta é dito com o MESMO texto que rotula o campo na tela — para as
+ * condições, a pergunta, não o rótulo do teste. Quem procura o que preencher
+ * varre os rótulos que está vendo, e o rótulo do teste não aparece em lugar
+ * nenhum da tela (item 29 do backlog). */
 function faltaResponder(lista, caso) {
   const falta = [];
   lista.forEach((c) => {
-    if (c.campo === 'valor' && caso.valor === null) falta.push('o valor');
+    if (c.campo === 'valor' && caso.valor === null) falta.push('Valor do imóvel');
     else if (c.campo === 'area' && caso.area === null) {
-      falta.push(('' + (REFERENCIA[c.referencia] || 'a área')).toLowerCase());
+      falta.push(REFERENCIA[c.referencia] || 'Área');
     } else if (c.campo === 'situacao' && caso.situacao === null) {
-      falta.push('a situação do imóvel');
+      falta.push('Situação do imóvel');
     } else if (c.tipo === 'condicao' && caso.condicoes[c.campo] === undefined) {
-      falta.push('«' + (c.rotulo || c.campo) + '»');
+      falta.push(c.pergunta || c.rotulo || c.campo);
     }
   });
   return falta;
@@ -343,7 +347,12 @@ function desenharResultado(lista) {
   const caso = casoDe(lista);
   const falta = faltaResponder(lista, caso);
   if (falta.length) {
-    alvo.appendChild(el('p', 'vazio', 'Falta informar ' + falta.join(', ') + '.'));
+    // Em lista, e não emendado numa frase: pergunta inteira dentro de "Falta
+    // informar ..." vira um período ilegível, e são perguntas longas.
+    alvo.appendChild(el('p', 'vazio', 'Falta responder:'));
+    const ul = el('ul', 'falta');
+    falta.forEach((t) => ul.appendChild(el('li', null, t)));
+    alvo.appendChild(ul);
     return;
   }
 
