@@ -56,3 +56,13 @@ function desenhar() {
 }
 
 desenhar();
+
+/* A caixinha: aqui o caso é a própria página, que o arquivo já registra. */
+if (window.SPUCaixinha) {
+  SPUCaixinha.iniciar({
+    ferramenta: 'simulador',
+    nome: 'Governança da Destinação',
+    botao: '#relatar',
+    contexto: () => [['Versão da base', BASE.versao]],
+  });
+}

@@ -239,3 +239,18 @@ function daAncora() {
 montarIndice();
 window.addEventListener('hashchange', () => desenharFicha(daAncora()));
 desenharFicha(daAncora());
+
+/* A caixinha leva o regime que está aberto — é sobre ele que se relata. */
+if (window.SPUCaixinha) {
+  SPUCaixinha.iniciar({
+    ferramenta: 'simulador',
+    nome: 'Governança da Destinação',
+    botao: '#relatar',
+    contexto: () => {
+      const cod = decodeURIComponent(location.hash.replace(/^#/, ''));
+      const m = BASE.materias.filter((x) => x.codigo === cod)[0];
+      return m ? [['Regime', m.rotulo], ['Versão da base', BASE.versao]]
+               : [['Versão da base', BASE.versao]];
+    },
+  });
+}

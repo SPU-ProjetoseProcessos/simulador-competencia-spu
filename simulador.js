@@ -481,6 +481,7 @@ function desenhar() {
   // também não são apagadas: voltar atrás não deve custar redigitar.
   desenharCampos(lista);
   desenharResultado(lista);
+  botaoRelato(lista);
 }
 
 /* `index.html#02.01.02.01.01` abre já naquela matéria — é assim que a ficha
@@ -502,3 +503,94 @@ montarSeletor();
 window.addEventListener('hashchange', aplicarAncora);
 aplicarAncora();
 desenhar();
+
+/* ------------------------------------------------- relatar algo estranho
+ *
+ * O relato leva o caso junto. "Está errado" não dá manutenção: quem for
+ * conferir precisa do regime, do que foi respondido, da resposta que a pessoa
+ * viu e da regra que a produziu — é a regra que se confronta com a norma.
+ *
+ * O caso é recomposto na hora em que a ficha abre, pelas mesmas funções que
+ * desenham a tela, para não haver uma segunda versão da verdade guardada.
+ *
+ * O botão só aparece quando há resposta na tela: sem resposta não há o que
+ * relatar, e o texto perguntaria por uma coisa que não está ali.
+ */
+function botaoRelato(lista) {
+  const b = document.getElementById('relatar');
+  if (!b) return;
+  const ha = estado.materia && !faltaResponder(lista, casoDe(lista)).length;
+  b.hidden = !ha;
+}
+
+function rotuloDaCondicao(teste, valor) {
+  const te = BASE.testes.filter((x) => x.teste === teste)[0];
+  if (!te) return [teste, valor];
+  const v = te.valores.filter((x) => x.valor === valor)[0];
+  return [te.rotulo, v ? v.rotulo : valor];
+}
+
+function paresDoCaso() {
+  const pares = [];
+  if (!estado.materia) return pares;
+  const m = materiaDe(estado.materia);
+  pares.push(['Regime', m.rotulo]);
+
+  const lista = listaExibida();
+  const caso = casoDe(lista);
+  if (caso.valor !== null) pares.push(['Valor do imóvel', dinheiro(caso.valor)]);
+  if (caso.area !== null) {
+    pares.push([REFERENCIA[caso.referencia] || 'Área', metros(caso.area)]);
+  }
+  if (caso.situacao) pares.push(['Situação do imóvel', SITUACAO[caso.situacao] || caso.situacao]);
+  Object.keys(caso.condicoes).sort().forEach((teste) => {
+    const par = rotuloDaCondicao(teste, caso.condicoes[teste]);
+    pares.push([par[0], par[1]]);
+  });
+
+  const falta = faltaResponder(lista, caso);
+  if (falta.length) {
+    pares.push(['Resposta', 'a consulta ainda estava incompleta: faltava informar '
+      + falta.join(', ')]);
+    return pares;
+  }
+
+  const comp = resolver(BASE, 'competencia', estado.materia, caso);
+  const manif = resolver(BASE, 'manifestacao', estado.materia, caso);
+  const autoridade = comp.vence.length === 1 ? comp.vence[0].resultado : null;
+
+  if (!manif.vence.length) {
+    pares.push(['Manifestação prévia', 'nenhuma regra alcançou o caso']);
+  } else if (manif.vence.length > 1) {
+    pares.push(['Manifestação prévia', 'mais de uma regra venceu: '
+      + manif.vence.map((r) => r.id).join(', ')]);
+  } else {
+    const r = manif.vence[0];
+    const efetivo = aplicarCondicional(r, autoridade);
+    pares.push(['Manifestação prévia',
+      (MANIFESTACAO[efetivo.resultado] || efetivo.resultado) + ' — regra ' + r.id]);
+  }
+
+  if (!comp.vence.length) {
+    pares.push(['Competência para autorizar', 'nenhuma regra alcançou o caso']);
+  } else if (comp.vence.length > 1) {
+    pares.push(['Competência para autorizar', 'mais de uma regra venceu: '
+      + comp.vence.map((r) => r.id).join(', ')]);
+  } else {
+    pares.push(['Competência para autorizar',
+      (COMPETENCIA[comp.vence[0].resultado] || comp.vence[0].resultado)
+      + ' — regra ' + comp.vence[0].id]);
+  }
+
+  pares.push(['Versão da base', BASE.versao]);
+  return pares;
+}
+
+if (window.SPUCaixinha) {
+  SPUCaixinha.iniciar({
+    ferramenta: 'simulador',
+    nome: 'Governança da Destinação',
+    botao: '#relatar',
+    contexto: paresDoCaso,
+  });
+}

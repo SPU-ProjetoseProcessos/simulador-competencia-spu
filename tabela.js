@@ -155,3 +155,26 @@ montarFiltros();
 window.addEventListener('hashchange', () => { aplicarAncora(); desenhar(); });
 aplicarAncora();
 desenhar();
+
+/* A caixinha leva os filtros em uso: é por eles que se chega à linha que a
+   pessoa está olhando. */
+if (window.SPUCaixinha) {
+  SPUCaixinha.iniciar({
+    ferramenta: 'simulador',
+    nome: 'Governança da Destinação',
+    botao: '#relatar',
+    contexto: () => {
+      const pares = [];
+      if (filtro.busca) pares.push(['Busca', filtro.busca]);
+      if (filtro.materia) {
+        const m = BASE.materias.filter((x) => x.codigo === filtro.materia)[0];
+        pares.push(['Regime', m ? m.rotulo : filtro.materia]);
+      }
+      if (filtro.dimensao) pares.push(['Dimensão', DIMENSAO[filtro.dimensao] || filtro.dimensao]);
+      if (filtro.resultado) pares.push(['Resposta', filtro.resultado]);
+      if (filtro.so) pares.push(['Só', filtro.so]);
+      pares.push(['Versão da base', BASE.versao]);
+      return pares;
+    },
+  });
+}
