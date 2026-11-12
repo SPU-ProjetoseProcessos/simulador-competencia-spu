@@ -368,15 +368,6 @@ table.regras tbody tr:hover { background: var(--azul-claro); }
 
 /* ------------------------------------------------------- rito e requisitos */
 
-.advertencia {
-  margin: 0 0 1.25rem;
-  padding: 0.7rem 0.9rem;
-  background: var(--ambar-claro);
-  border-left: 4px solid var(--ambar);
-  border-radius: 4px;
-  font-size: 0.88rem;
-}
-
 #rito .bloco { background: var(--papel); }
 
 ol.passos { margin: 0.8rem 0 0; padding-left: 1.4rem; }
@@ -393,20 +384,6 @@ ol.passos li { margin-bottom: 1rem; }
 .norma-cab { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
 .norma-tema { margin: 0.1rem 0 0.35rem; font-size: 0.9rem; color: var(--azul); }
 .norma .explica { margin-top: 0; color: var(--tinta); font-size: 0.89rem; }
-
-/* ----------------------------------------------------------- faixa de estado */
-
-.faixa-estado { border-bottom: 1px solid var(--linha); }
-.faixa-estado.atencao { background: var(--ambar-claro); border-bottom-color: #e3c98f; }
-.faixa-estado.ok { background: #e5f4e4; border-bottom-color: #a9d3a5; }
-.faixa-estado-dentro {
-  max-width: 1480px;
-  margin: 0 auto;
-  padding: 0.6rem 1rem;
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
-.faixa-estado.atencao .faixa-estado-dentro strong { color: var(--ambar); }
 
 /* ------------------------------------------------------ rito: título e fluxo */
 
