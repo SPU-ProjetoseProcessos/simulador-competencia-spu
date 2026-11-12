@@ -129,7 +129,7 @@ function tabelaRegras(regras) {
     tr.appendChild(el('td', 'col-faixa', faixaArea(r)));
     const td = el('td', 'col-cond',
       condicoesTexto(r, TESTES) || 'Sem condição — vale quando nenhuma específica bate');
-    if (r.materia === '*') td.appendChild(el('span', 'etiqueta coringa', 'coringa'));
+    if (r.materia === '*') td.appendChild(el('span', 'etiqueta coringa', 'qualquer regime'));
     tr.appendChild(td);
     const tdr = el('td', 'col-resultado');
     tdr.appendChild(el('strong', null, resultadoTexto(r)));
