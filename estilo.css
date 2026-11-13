@@ -193,6 +193,9 @@ select:focus, input:focus { outline: 2px solid var(--azul); outline-offset: 1px;
 }
 .rodape p { margin: 0 0 0.2rem; }
 .rodape .assinatura { margin-top: 0.7rem; font-weight: 600; color: var(--tinta); }
+/* O nome do Escritório leva à página dele. Sublinhado e na cor de link:
+   dentro de uma linha em negrito, só a cor não bastaria para distinguir. */
+.rodape .assinatura a { color: var(--azul); text-decoration: underline; }
 
 /* ------------------------------------------------------------- navegação */
 

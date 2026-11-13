@@ -168,7 +168,7 @@
     ]);
     var fechar = el("button", { type: "button", classe: "spuc-x", "aria-label": "Fechar", texto: "×" });
     dlg = el("dialog", { classe: "spuc" + (cfg.tema === "claro" ? " spuc-claro" : ""), "aria-label": "Registrar um pedido sobre " + nome }, [
-      el("div", { classe: "spuc-topo" }, [el("b", { texto: nome + " — sugestão, erro ou dúvida" }), fechar]),
+      el("div", { classe: "spuc-topo" }, [el("b", { texto: "Fale com a equipe — " + nome }), fechar]),
       formulario,
       el("p", { classe: "spuc-pe", texto: "CGGES — Escritório de Processos da SPU" })
     ]);
@@ -234,7 +234,7 @@
     var bt = typeof cfg.botao === "string" ? document.querySelector(cfg.botao) : cfg.botao;
     if (!bt && cfg.botao !== false) {       // sem botão seu, nasce um flutuante
       if (!estiloPosto) { document.head.appendChild(el("style", { texto: CSS })); estiloPosto = true; }
-      bt = el("button", { type: "button", classe: "spuc-bt", texto: cfg.rotuloBotao || "Sugerir ou apontar erro" });
+      bt = el("button", { type: "button", classe: "spuc-bt", texto: cfg.rotuloBotao || "Fale com a equipe" });
       var casca = el("div", { classe: "spuc-flutua spuc" }, [bt]);
       casca.style.setProperty("--spuc-cor", cfg.cor || "#1b2b85"); casca.style.setProperty("--spuc-sobre-cor", "#fff");
       document.body.appendChild(casca);
@@ -243,5 +243,6 @@
     return { abrir: abrir };
   }
 
-  window.SPUCaixinha = { iniciar: iniciar, abrir: abrir, montarTexto: montarTexto, versao: "1" };
+  // montarTexto é interno: recebe o relato e o bloco já pronto, não os pares. Não é API.
+  window.SPUCaixinha = { iniciar: iniciar, abrir: abrir, versao: "1" };
 })();

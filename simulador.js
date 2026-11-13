@@ -596,6 +596,12 @@ function paresDoCaso() {
 }
 
 if (window.SPUCaixinha) {
+  // Dois botões, uma ficha só: o do rodapé é o geral, igual em toda ferramenta
+  // do Escritório; o de cima aparece junto da resposta, que é onde há algo
+  // para a pessoa estranhar. Os dois levam o mesmo caso, porque `contexto` é
+  // função e só roda na hora de abrir.
+  const fale = document.getElementById('fale');
+  if (fale) fale.addEventListener('click', () => SPUCaixinha.abrir());
   SPUCaixinha.iniciar({
     ferramenta: 'simulador',
     nome: 'Governança da Destinação',
