@@ -169,8 +169,6 @@ function desenharFicha(cod) {
   const proprias = regras.filter((r) => r.materia === cod);
   const irmas = irmasColapsadas(m);
 
-  alvo.appendChild(avisoDeUso('regras'));
-
   // --- identificação
   const id = el('header', 'cabeca-ficha');
   id.appendChild(el('h2', 'titulo-ficha',
@@ -229,6 +227,8 @@ function desenharFicha(cod) {
     ressalvas.forEach((x) => b.appendChild(el('p', 'explica', x)));
     alvo.appendChild(b);
   }
+
+  alvo.appendChild(avisoDeUso());
 
   window.scrollTo(0, 0);
 }

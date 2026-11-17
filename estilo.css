@@ -463,38 +463,42 @@ ol.fluxo:before {
 .botao-relato:hover { background: none; color: var(--azul); }
 
 /* ------------------------------------------------- aviso de uso da resposta
-   Uma etiqueta, não um parágrafo: fica no alto, antes da resposta, e abre o
-   texto inteiro quando clicada. A inclinação de 2 graus é o que a faz ler-se
-   como etiqueta colada e não como mais um bloco da página.
+   Faixa com selo à esquerda, escolhida por Juarez em 17/11/2026 entre três
+   formas. Fica no fim da resposta e da ficha, e no alto da tabela — depois de
+   309 linhas de tabela ninguém a veria.
 
-   Sem âmbar nem vermelho: nesta folha essas duas cores significam ressalva e
-   alarme do caso, e um aviso que aparece sempre naquelas cores faria as duas
-   pararem de alarmar. */
-.selo-uso { margin: 0 0 1rem; }
-.selo-uso > summary {
-  display: inline-block;
-  list-style: none;
-  cursor: pointer;
-  transform: rotate(-2deg);
-  transform-origin: left center;
+   Azul, e não âmbar nem vermelho: nesta folha essas duas cores significam
+   ressalva e alarme do caso, e um aviso que aparece sempre naquelas cores
+   faria as duas pararem de alarmar. O destaque vem do selo cheio, que é o
+   único lugar da folha com texto branco sobre azul fora dos botões. */
+.aviso-uso {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  margin-top: 1.1rem;
+  padding: 0.85rem 1rem;
   background: var(--azul-claro);
-  color: var(--azul);
-  border: 1px solid var(--accent-claro);
-  border-radius: 4px;
-  padding: 0.25rem 0.6rem;
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 5px;
 }
-.selo-uso > summary::-webkit-details-marker { display: none; }
-.selo-uso > summary::after { content: " ⌄"; font-weight: 700; }
-.selo-uso[open] > summary::after { content: " ⌃"; }
-.selo-uso > summary:hover { background: #d7e4fb; }
-.selo-uso > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
-.selo-uso p {
-  margin: 0.55rem 0 0;
-  padding-left: 0.1rem;
-  color: var(--tinta-fraca);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  max-width: 62ch;
+.aviso-uso .marca {
+  flex: none;
+  margin-top: 0.15rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 3px;
+  background: var(--azul);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.aviso-uso p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var(--tinta); }
+.aviso-uso p + p { margin-top: 0.3rem; }
+
+/* Na tabela a faixa fica entre a contagem e a tabela, e sem a margem de cima
+   encosta na contagem. */
+#aviso-uso .aviso-uso { margin: 0.6rem 0 0.9rem; }
+
+@media (max-width: 560px) {
+  .aviso-uso { flex-direction: column; gap: 0.5rem; }
 }

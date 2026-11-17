@@ -138,36 +138,32 @@ function resultadoTexto(r) {
 /* ------------------------------------------------- o aviso de uso da resposta
  * Nas três telas que mostram regra — o simulador, a ficha e a tabela.
  *
- * É uma etiqueta, e não um parágrafo no fim: em 17/11/2026 Juarez viu a
- * primeira versão e disse que no fim do texto ninguém repara. A etiqueta fica
- * no alto, antes da resposta, e abre o texto inteiro quando clicada — assim o
- * aviso se vê sempre e se lê quando interessa.
+ * Forma escolhida por Juarez em 17/11/2026, depois de ver três: faixa larga,
+ * com um selo escuro à esquerda. O texto é o dele, e são duas frases só — a
+ * versão anterior abria "Isto é uma indicação, não uma decisão", que ele
+ * mandou tirar.
  *
- * A frase do meio está ligada ao estado da base (`BASE.validada`, que vem do
+ * A primeira frase está ligada ao estado da base (`BASE.validada`, que vem do
  * derivador): no dia em que a área de destinação fechar a conferência, ela cai
- * sozinha nas três páginas, sem ninguém ter de lembrar de apagá-la aqui.
- *
- * `onde` é 'simulador' (a resposta de um caso) ou 'regras' (a ficha e a tabela,
- * que mostram as regras sem caso nenhum). */
-function avisoDeUso(onde) {
-  const d = document.createElement('details');
-  d.className = 'selo-uso';
+ * sozinha nas três páginas e sobra a segunda, que vale sempre. */
+function avisoDeUso() {
+  const d = document.createElement('div');
+  d.className = 'aviso-uso';
 
-  const s = document.createElement('summary');
-  s.textContent = 'Indicação — não é decisão';
-  d.appendChild(s);
+  const marca = document.createElement('span');
+  marca.className = 'marca';
+  marca.textContent = 'Atenção';
+  d.appendChild(marca);
 
-  const p = document.createElement('p');
-  const partes = ['Isto é uma indicação, não uma decisão.'];
+  const texto = document.createElement('div');
   if (window.BASE && !BASE.validada) {
-    partes.push('A base de regras ainda está em conferência pela área de destinação.');
+    const p1 = document.createElement('p');
+    p1.textContent = 'A base de regras ainda está em conferência pela área de destinação.';
+    texto.appendChild(p1);
   }
-  partes.push(onde === 'simulador'
-    ? 'Confira o fundamento citado abaixo e decida à luz do caso concreto — '
-      + 'o simulador não substitui a análise de quem instrui o processo.'
-    : 'Confira o fundamento de cada regra e decida à luz do caso concreto — '
-      + 'esta página não substitui a análise de quem instrui o processo.');
-  p.textContent = partes.join(' ');
-  d.appendChild(p);
+  const p2 = document.createElement('p');
+  p2.textContent = 'O simulador não substitui a análise de quem instrui o processo.';
+  texto.appendChild(p2);
+  d.appendChild(texto);
   return d;
 }

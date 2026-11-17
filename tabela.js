@@ -143,12 +143,13 @@ function desenhar() {
   document.getElementById('vazio').hidden = linhas.length > 0;
 }
 
-/* O aviso de uso entra uma vez, abaixo da tabela: ele vale para a página
- * inteira, não para o filtro da vez, e redesenhá-lo a cada tecla seria piscar
- * um texto que não muda. */
+/* O aviso entra uma vez, e no alto — aqui não vai para o fim como nas outras
+ * duas telas: abaixo de 309 linhas de tabela ele não existiria. Vale para a
+ * página inteira, não para o filtro da vez, e redesenhá-lo a cada tecla seria
+ * piscar um texto que não muda. */
 (function avisoNaTabela() {
   const onde = document.getElementById('aviso-uso');
-  if (onde) onde.appendChild(avisoDeUso('regras'));
+  if (onde) onde.appendChild(avisoDeUso());
 }());
 
 /* `tabela.html#02.01.02.01.01` abre já filtrada naquela matéria. */

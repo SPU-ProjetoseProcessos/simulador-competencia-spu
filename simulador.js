@@ -356,9 +356,6 @@ function desenharResultado(lista) {
     return;
   }
 
-  // A etiqueta vem antes da resposta: no fim do texto ninguém repara nela.
-  alvo.appendChild(avisoDeUso('simulador'));
-
   // A competência resolve primeiro: a manifestação pode depender dela.
   const comp = resolver(BASE, 'competencia', estado.materia, caso);
   const manif = resolver(BASE, 'manifestacao', estado.materia, caso);
@@ -431,6 +428,9 @@ function desenharResultado(lista) {
     alvo.appendChild(s);
   }
 
+  // No fim, depois de tudo que a ferramenta tem a dizer — mas numa faixa que
+  // se vê, que foi o que faltou na primeira versão.
+  alvo.appendChild(avisoDeUso());
 }
 
 // ------------------------------------------------------------------- desenho
