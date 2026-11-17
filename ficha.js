@@ -228,6 +228,8 @@ function desenharFicha(cod) {
     alvo.appendChild(b);
   }
 
+  alvo.appendChild(avisoDeUso('regras'));
+
   window.scrollTo(0, 0);
 }
 

@@ -461,3 +461,21 @@ ol.fluxo:before {
   text-underline-offset: 3px;
 }
 .botao-relato:hover { background: none; color: var(--azul); }
+
+/* ------------------------------------------------- aviso de uso da resposta
+   Aparece nas três telas que mostram regra, sempre — e por aparecer sempre é
+   que NÃO leva âmbar nem vermelho: nesta folha essas duas cores significam
+   ressalva e alarme do caso, e um aviso constante naquelas cores faria as
+   duas pararem de alarmar. Fica em papel, com uma barra na cor da marca à
+   esquerda, no mesmo corpo de letra do texto da resposta — aviso em letra
+   miúda é aviso que ninguém lê. */
+.aviso-uso {
+  margin-top: 1.1rem;
+  padding: 0.85rem 1rem;
+  background: var(--papel);
+  border: 1px solid var(--linha);
+  border-left: 4px solid var(--accent-claro);
+  border-radius: 4px;
+}
+.aviso-uso strong { display: block; color: var(--tinta); }
+.aviso-uso p { margin: 0.3rem 0 0; color: var(--tinta-fraca); line-height: 1.5; }

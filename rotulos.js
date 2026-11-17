@@ -134,3 +134,36 @@ function resultadoTexto(r) {
   }
   if (s) s.textContent = BASE.situacao;
 }());
+
+/* ------------------------------------------------- o aviso de uso da resposta
+ * Nas três telas que mostram regra — o simulador, a ficha e a tabela. Diz o que
+ * a resposta é, por que ainda não é definitiva e o que fazer com ela.
+ *
+ * A frase do meio está ligada ao estado da base (`BASE.validada`, que vem do
+ * derivador): no dia em que a área de destinação fechar a conferência, ela cai
+ * sozinha nas três páginas, sem ninguém ter de lembrar de apagá-la aqui.
+ *
+ * `onde` é 'simulador' (a resposta de um caso) ou 'regras' (a ficha e a tabela,
+ * que mostram as regras sem caso nenhum). */
+function avisoDeUso(onde) {
+  const d = document.createElement('div');
+  d.className = 'aviso-uso';
+
+  const forte = document.createElement('strong');
+  forte.textContent = 'Isto é uma indicação, não uma decisão.';
+  d.appendChild(forte);
+
+  const p = document.createElement('p');
+  const partes = [];
+  if (window.BASE && !BASE.validada) {
+    partes.push('A base de regras ainda está em conferência pela área de destinação.');
+  }
+  partes.push(onde === 'simulador'
+    ? 'Confira o fundamento citado acima e decida à luz do caso concreto — '
+      + 'o simulador não substitui a análise de quem instrui o processo.'
+    : 'Confira o fundamento de cada regra e decida à luz do caso concreto — '
+      + 'esta página não substitui a análise de quem instrui o processo.');
+  p.textContent = partes.join(' ');
+  d.appendChild(p);
+  return d;
+}

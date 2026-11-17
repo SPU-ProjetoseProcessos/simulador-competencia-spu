@@ -427,6 +427,11 @@ function desenharResultado(lista) {
     ressalvas.forEach((x) => s.appendChild(el('p', 'explica', x)));
     alvo.appendChild(s);
   }
+
+  // Por último, depois de tudo que a ferramenta tem a dizer: o que fazer com
+  // isso. Vem no fim, e não no alto, porque antes de ler a resposta o aviso
+  // não significa nada.
+  alvo.appendChild(avisoDeUso('simulador'));
 }
 
 // ------------------------------------------------------------------- desenho
