@@ -136,8 +136,12 @@ function resultadoTexto(r) {
 }());
 
 /* ------------------------------------------------- o aviso de uso da resposta
- * Nas três telas que mostram regra — o simulador, a ficha e a tabela. Diz o que
- * a resposta é, por que ainda não é definitiva e o que fazer com ela.
+ * Nas três telas que mostram regra — o simulador, a ficha e a tabela.
+ *
+ * É uma etiqueta, e não um parágrafo no fim: em 17/11/2026 Juarez viu a
+ * primeira versão e disse que no fim do texto ninguém repara. A etiqueta fica
+ * no alto, antes da resposta, e abre o texto inteiro quando clicada — assim o
+ * aviso se vê sempre e se lê quando interessa.
  *
  * A frase do meio está ligada ao estado da base (`BASE.validada`, que vem do
  * derivador): no dia em que a área de destinação fechar a conferência, ela cai
@@ -146,20 +150,20 @@ function resultadoTexto(r) {
  * `onde` é 'simulador' (a resposta de um caso) ou 'regras' (a ficha e a tabela,
  * que mostram as regras sem caso nenhum). */
 function avisoDeUso(onde) {
-  const d = document.createElement('div');
-  d.className = 'aviso-uso';
+  const d = document.createElement('details');
+  d.className = 'selo-uso';
 
-  const forte = document.createElement('strong');
-  forte.textContent = 'Isto é uma indicação, não uma decisão.';
-  d.appendChild(forte);
+  const s = document.createElement('summary');
+  s.textContent = 'Indicação — não é decisão';
+  d.appendChild(s);
 
   const p = document.createElement('p');
-  const partes = [];
+  const partes = ['Isto é uma indicação, não uma decisão.'];
   if (window.BASE && !BASE.validada) {
     partes.push('A base de regras ainda está em conferência pela área de destinação.');
   }
   partes.push(onde === 'simulador'
-    ? 'Confira o fundamento citado acima e decida à luz do caso concreto — '
+    ? 'Confira o fundamento citado abaixo e decida à luz do caso concreto — '
       + 'o simulador não substitui a análise de quem instrui o processo.'
     : 'Confira o fundamento de cada regra e decida à luz do caso concreto — '
       + 'esta página não substitui a análise de quem instrui o processo.');

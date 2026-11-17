@@ -356,6 +356,9 @@ function desenharResultado(lista) {
     return;
   }
 
+  // A etiqueta vem antes da resposta: no fim do texto ninguém repara nela.
+  alvo.appendChild(avisoDeUso('simulador'));
+
   // A competência resolve primeiro: a manifestação pode depender dela.
   const comp = resolver(BASE, 'competencia', estado.materia, caso);
   const manif = resolver(BASE, 'manifestacao', estado.materia, caso);
@@ -428,10 +431,6 @@ function desenharResultado(lista) {
     alvo.appendChild(s);
   }
 
-  // Por último, depois de tudo que a ferramenta tem a dizer: o que fazer com
-  // isso. Vem no fim, e não no alto, porque antes de ler a resposta o aviso
-  // não significa nada.
-  alvo.appendChild(avisoDeUso('simulador'));
 }
 
 // ------------------------------------------------------------------- desenho
@@ -466,11 +465,18 @@ function listaExibida() {
     const vals = valoresOferecidos(proprias, te, dims);
     if (vals.length) extras.push(campoCondicao(te, vals));
   });
-  // Ordem confirmada, SEMPRE a mesma: valor, a condição que determina o que a
-  // área mede, área, situação, demais condições. Montada aqui e não deixada ao
-  // motor porque `campos()` devolve o gatilho ora antes, ora depois da área,
+  // Ordem SEMPRE a mesma: valor, a condição que determina o que a área mede,
+  // demais condições, área, situação. Montada aqui e não deixada ao motor
+  // porque `campos()` devolve o gatilho ora antes, ora depois da área,
   // conforme o ramo — e um campo que troca de lugar entre uma resposta e outra
   // faz o técnico perder o fio.
+  //
+  // A área desceu para o fim em 17/11/2026, depois de Juarez ver um campo
+  // nascer acima do que ele acabara de responder. Acontecia num regime só, o
+  // aforamento gratuito: a área só é perguntada quando as respostas a tornam
+  // relevante, e, vindo antes das demais condições, entrava no meio da lista
+  // depois de respondida a última. Com ela no fim, campo novo só pode aparecer
+  // abaixo — as condições já estão todas acima, e a situação depende da área.
   const gatilhosRef = new Set();
   proprias.forEach((r) => {
     if ((r.area.min !== null || r.area.max !== null) &&
@@ -485,8 +491,8 @@ function listaExibida() {
   const cond = todas2.filter((c) => c.tipo === 'condicao');
   return so('valor')
     .concat(cond.filter((c) => gatilhosRef.has(c.campo)).sort(porOrdem))
-    .concat(so('area'), so('situacao'))
-    .concat(cond.filter((c) => !gatilhosRef.has(c.campo)).sort(porOrdem));
+    .concat(cond.filter((c) => !gatilhosRef.has(c.campo)).sort(porOrdem))
+    .concat(so('area'), so('situacao'));
 }
 
 function desenhar() {

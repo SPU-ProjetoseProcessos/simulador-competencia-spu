@@ -463,19 +463,38 @@ ol.fluxo:before {
 .botao-relato:hover { background: none; color: var(--azul); }
 
 /* ------------------------------------------------- aviso de uso da resposta
-   Aparece nas três telas que mostram regra, sempre — e por aparecer sempre é
-   que NÃO leva âmbar nem vermelho: nesta folha essas duas cores significam
-   ressalva e alarme do caso, e um aviso constante naquelas cores faria as
-   duas pararem de alarmar. Fica em papel, com uma barra na cor da marca à
-   esquerda, no mesmo corpo de letra do texto da resposta — aviso em letra
-   miúda é aviso que ninguém lê. */
-.aviso-uso {
-  margin-top: 1.1rem;
-  padding: 0.85rem 1rem;
-  background: var(--papel);
-  border: 1px solid var(--linha);
-  border-left: 4px solid var(--accent-claro);
+   Uma etiqueta, não um parágrafo: fica no alto, antes da resposta, e abre o
+   texto inteiro quando clicada. A inclinação de 2 graus é o que a faz ler-se
+   como etiqueta colada e não como mais um bloco da página.
+
+   Sem âmbar nem vermelho: nesta folha essas duas cores significam ressalva e
+   alarme do caso, e um aviso que aparece sempre naquelas cores faria as duas
+   pararem de alarmar. */
+.selo-uso { margin: 0 0 1rem; }
+.selo-uso > summary {
+  display: inline-block;
+  list-style: none;
+  cursor: pointer;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+  background: var(--azul-claro);
+  color: var(--azul);
+  border: 1px solid var(--accent-claro);
   border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
-.aviso-uso strong { display: block; color: var(--tinta); }
-.aviso-uso p { margin: 0.3rem 0 0; color: var(--tinta-fraca); line-height: 1.5; }
+.selo-uso > summary::-webkit-details-marker { display: none; }
+.selo-uso > summary::after { content: " ⌄"; font-weight: 700; }
+.selo-uso[open] > summary::after { content: " ⌃"; }
+.selo-uso > summary:hover { background: #d7e4fb; }
+.selo-uso > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 2px; }
+.selo-uso p {
+  margin: 0.55rem 0 0;
+  padding-left: 0.1rem;
+  color: var(--tinta-fraca);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: 62ch;
+}
