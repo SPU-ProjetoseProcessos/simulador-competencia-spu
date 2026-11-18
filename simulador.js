@@ -22,9 +22,11 @@ function materiaDe(codigo) {
 
 // --------------------------------------------------- seletor de matéria
 
-/* Monta o seletor agrupado pela TT-02. Submodalidades cuja regra é idêntica à
- * da irmã aparecem como o regime-pai, com um único item — decisão da rodada 3.
- * O rótulo do pai vem da TT-02, não do nome das filhas. */
+/* Monta o seletor em ordem alfabética, numa lista só (decisão de Juarez em
+ * 18/11/2026: antes vinha agrupado pelas classes da TT-02, que quem consulta
+ * não usa para procurar). Submodalidades cuja regra é idêntica à da irmã
+ * aparecem como o regime-pai, com um único item — decisão da rodada 3. O
+ * rótulo do pai vem da TT-02, não do nome das filhas. */
 function montarSeletor() {
   const sel = document.getElementById('materia');
   sel.appendChild(el('option', null, 'Escolha o regime…')).value = '';
@@ -52,21 +54,14 @@ function montarSeletor() {
     });
   });
 
-  const ordem = Object.keys(BASE.classes_tt02).sort().concat(['fora']);
-  ordem.forEach((chave) => {
-    if (!porClasse[chave]) return;
-    const g = el('optgroup');
-    g.label = chave === 'fora' ? 'Fora da TT-02' : BASE.classes_tt02[chave];
-    porClasse[chave]
-      .sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt-BR'))
-      .forEach((m) => {
-        const o = el('option', null, m.rotulo);
-        o.value = m.codigo;
-        if (m.colapsa) o.dataset.colapsa = m.colapsa.join(' · ');
-        g.appendChild(o);
-      });
-    sel.appendChild(g);
-  });
+  Object.keys(porClasse).reduce((todos, chave) => todos.concat(porClasse[chave]), [])
+    .sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt-BR'))
+    .forEach((m) => {
+      const o = el('option', null, m.rotulo);
+      o.value = m.codigo;
+      if (m.colapsa) o.dataset.colapsa = m.colapsa.join(' · ');
+      sel.appendChild(o);
+    });
 
   sel.addEventListener('change', () => {
     estado.materia = sel.value;

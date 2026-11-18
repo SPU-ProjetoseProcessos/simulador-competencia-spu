@@ -78,12 +78,12 @@ function montarIndice() {
     });
   });
 
-  Object.keys(BASE.classes_tt02).sort().concat(['fora']).forEach((chave) => {
-    if (!porClasse[chave]) return;
-    alvo.appendChild(el('h3', null,
-      chave === 'fora' ? 'Fora da TT-02' : BASE.classes_tt02[chave]));
+  // Ordem alfabética, numa lista só, como no simulador (Juarez, 18/11/2026).
+  // A classe da TT-02 continua na própria ficha de cada regime.
+  [Object.keys(porClasse).reduce((todos, chave) => todos.concat(porClasse[chave]), [])]
+    .forEach((lista) => {
     const ul = el('ul', 'lista-materias');
-    porClasse[chave]
+    lista
       .sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt-BR'))
       .forEach((x) => {
         const li = el('li');
