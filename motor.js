@@ -161,8 +161,11 @@ function perguntaSituacao(comArea, area) {
  * "não é Reurb" na legitimação fundiária. */
 function valoresOferecidos(proprias, te, dims) {
   const teste = te.teste;
-  const todos = new Set(te.valores.map((v) => v.valor));
-  return Array.from(todos).sort().filter((v) => dims.every((dim) => {
+  // Na ordem em que testes.csv declara, não na alfabética do código: assim
+  // "Outra finalidade" fica por último e Reurb-S ao lado de Reurb-E.
+  const todos = te.valores.map((v) => v.valor)
+    .filter((v, i, a) => a.indexOf(v) === i);
+  return todos.filter((v) => dims.every((dim) => {
     const rd = proprias.filter((r) => r.dimensao === dim);
     if (!rd.length) return true;
     const admite = rd.some((r) => r.condicoes.some(
@@ -201,13 +204,19 @@ function campos(base, materia, respostas) {
   const todas = regrasDa(base, materia, admitidos);
   const proprias = todas.filter((r) => r.materia === materia);
   const dims = Array.from(new Set(proprias.map((r) => r.dimensao))).sort();
-  const rs = todas.filter((r) => compativel(r, respostas));
+  const candidatas = todas.filter((r) => compativel(r, respostas));
+  // O valor informado tira de cena as regras de outra faixa — e, com elas, as
+  // perguntas que só elas fazem. O campo do valor é decidido antes do filtro,
+  // senão sumiria ao ser preenchido. Igual em campos.py.
+  const valor = respostas.__valor__;
+  const rs = candidatas.filter((r) => valor === undefined || valor === null ||
+                                      dentro(valor, r.valor));
   const pedidos = m.testes;
   const out = [];
   const ja = new Set();
 
   // 1. valor
-  if (rs.some((r) => usaFaixa(r, 'valor'))) {
+  if (candidatas.some((r) => usaFaixa(r, 'valor'))) {
     out.push({ campo: 'valor', tipo: 'numero', unidade: 'BRL' });
   }
 

@@ -49,11 +49,6 @@ const GATILHO = {
   diretrizes_cde_por_regime: 'Regra de transição do art. 10, § 1º, II: vigora até '
     + 'a CDE editar diretrizes próprias para este regime.',
 };
-const NIVEL_GE_DESUP = {
-  0: 'nível 0 — até R$ 1,0 milhão',
-  1: 'nível 1 — acima de R$ 1,0 milhão até R$ 10 milhões',
-  2: 'nível 2 — acima de R$ 10 milhões',
-};
 const DIMENSAO = {
   manifestacao: 'Manifestação',
   competencia: 'Competência',
@@ -115,10 +110,7 @@ function condicoesTexto(r, testesPorId) {
 function resultadoTexto(r) {
   const base = MANIFESTACAO_CURTA[r.resultado] || COMPETENCIA[r.resultado]
     || r.resultado;
-  if (r.resultado === 'ge_desup' && r.ge_desup_nivel !== null) {
-    return base + ' (' + NIVEL_GE_DESUP[r.ge_desup_nivel].split(' — ')[0] + ')';
-  }
-  return base;
+  return base;   // sem o nível do GE-DESUP: saiu da tela em 18/11/2026
 }
 
 /* Rodapé, igual nas cinco páginas: a data da versão e a situação da base.

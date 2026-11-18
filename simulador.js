@@ -84,6 +84,7 @@ function montarSeletor() {
 function respostasAtuais() {
   const r = Object.assign({}, estado.condicoes);
   if (estado.area !== null) r.__area__ = estado.area;
+  if (estado.valor !== null) r.__valor__ = estado.valor;
   return r;
 }
 
@@ -370,10 +371,11 @@ function desenharResultado(lista) {
   } else {
     const r = manif.vence[0];
     const ap = aplicarCondicional(r, autoridade);
-    let texto = MANIFESTACAO[ap.resultado] || ap.resultado;
-    if (ap.resultado === 'ge_desup' && r.ge_desup_nivel !== null) {
-      texto += ' — ' + NIVEL_GE_DESUP[r.ge_desup_nivel];
-    }
+    // O nível do GE-DESUP (0, 1 ou 2) saiu da tela em 18/11/2026: o rótulo
+    // colava a faixa de valor no nível e contradizia o valor digitado sempre
+    // que o nível vinha fixado pelo regime (ACT-Reurb de R$ 9 milhões dizia
+    // "acima de R$ 10 milhões"). O dado continua na base.
+    const texto = MANIFESTACAO[ap.resultado] || ap.resultado;
     const b = blocoResultado('Manifestação prévia', texto,
       ap.resultado === 'sem_manifestacao' ? 'neutro' : 'destaque');
     if (ap.nota) b.appendChild(el('p', 'explica', ap.nota));
