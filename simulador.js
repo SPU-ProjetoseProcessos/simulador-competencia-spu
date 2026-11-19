@@ -455,10 +455,7 @@ function listaExibida() {
     if (nomes.indexOf(t) !== -1) return;
     if (estado.condicoes[t] === undefined) return;
     const te = testesPorId[t];
-    if (te.exibir_quando) {
-      const par = te.exibir_quando.split('=');
-      if (resp[par[0]] !== par[1]) return;   // o gatilho deixou de valer
-    }
+    if (te.exibir_quando && !gatilhoAtende(te.exibir_quando, resp)) return;   // o gatilho deixou de valer
     const vals = valoresOferecidos(proprias, te, dims);
     if (vals.length) extras.push(campoCondicao(te, vals));
   });

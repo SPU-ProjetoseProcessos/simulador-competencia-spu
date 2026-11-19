@@ -175,6 +175,22 @@ function valoresOferecidos(proprias, te, dims) {
   }));
 }
 
+/* Quando uma pergunta só aparece se outra tiver certa resposta (exibir_quando).
+ * Duas formas: "T03=provisao_habitacional" (aparece quando a resposta É essa) e
+ * "T02!=sim" (aparece enquanto a resposta NÃO for essa, inclusive antes de
+ * respondida). A segunda entrou em 19/11/2026 para a finalidade sumir quando a
+ * área é portuária. Igual em campos.py. */
+function partesGatilho(exibir) {
+  const m = /^([^!=]+)(!?=)(.+)$/.exec(exibir);
+  return { teste: m[1], nega: m[2] === '!=', valor: m[3] };
+}
+
+function gatilhoAtende(exibir, respostas) {
+  const g = partesGatilho(exibir);
+  const v = respostas[g.teste];
+  return g.nega ? v !== g.valor : v === g.valor;
+}
+
 function ordenarTestes(pedidos, testesPorId) {
   const ordem = [];
   let restam = Array.from(pedidos).sort();
@@ -182,7 +198,7 @@ function ordenarTestes(pedidos, testesPorId) {
     const antes = restam.length;
     restam.slice().forEach((t) => {
       const dep = testesPorId[t].exibir_quando;
-      const d = dep ? dep.split('=')[0] : null;
+      const d = dep ? partesGatilho(dep).teste : null;
       if (!d || restam.indexOf(d) === -1) {
         ordem.push(t);
         restam = restam.filter((x) => x !== t);
@@ -254,10 +270,7 @@ function campos(base, materia, respostas) {
   ordenarTestes(pedidos, testesPorId).forEach((x) => {
     if (ja.has(x)) return;
     const te = testesPorId[x];
-    if (te.exibir_quando) {
-      const par = te.exibir_quando.split('=');
-      if (respostas[par[0]] !== par[1]) return;
-    }
+    if (te.exibir_quando && !gatilhoAtende(te.exibir_quando, respostas)) return;
     if (!rs.some((r) => r.condicoes.some((c) => c.teste === x))) return;
     const vals = valoresOferecidos(proprias, te, dims);
     if (!vals.length) return;
